@@ -29,7 +29,7 @@
 
 
 
-    <div class="section-box @if($full ) bg-full @elseif($partial) bg-partial @else bg-empty @endif" >
+    <div class="section-box @if($full ) bg-full @elseif($partial) bg-occupied @else bg-empty @endif" >
 
             <a href="#">
                 <h4 class="text-white my-0">

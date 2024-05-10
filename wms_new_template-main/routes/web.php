@@ -36,7 +36,7 @@ Route::get('/homepage', [App\Http\Controllers\HomeController::class, 'index'])->
 
 //Floors Me
 Route::get('/floor-overview', function () {
-    return view('floorOverview');
+    return view('backend.rack.floorOverview');
 })->name('floor.overview');
 
 
