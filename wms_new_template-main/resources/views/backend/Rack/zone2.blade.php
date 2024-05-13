@@ -13,7 +13,7 @@
         @endfor
 
         <?php
-        $data = DB::table('location')->where('LocationCode', '=', $column . $rack_row)->first();
+        $data = DB::table('location')->where('LocationCode', '=','Z2-' . $column . '-F' . $rack_row)->first();
         $full = false;
         $partial = false;
 
@@ -33,12 +33,7 @@
 
             <a href="#">
                 <h4 class="text-white my-0">
-                    @for($i = 11; $i >= 1; $i--)
-                        @if($row == (11 - $i))
-                        <?php $rack_row = 0 + $i; ?>
-                            {{ $column }}{{ $rack_row }}
-                        @endif
-                    @endfor
+                    {{ $column }}-F{{ $rack_row }}
                 </h4>
                 <div class="box-dec">
                     <div class="section-rack d-flex align-items-center" @if($full ) style="background-color:rgba(255, 140, 0, 0.9)" @elseif($partial) style="background-color: rgba(0, 135, 90, 0.9);" @else style="background-color: #A8A8A8"  @endif>
@@ -47,11 +42,7 @@
                         </div>
                         <div class="dec">
                             <h4 class="text-white my-0">
-                                @for($i = 11; $i >= 1; $i--)
-                                    @if($row == (11 - $i))
-                                        {{ $column }}{{ $rack_row }}
-
-                                        @if($data)
+                                @if($data)
                                             @if($data->LocationType == 1)
                                                 <?php $LocationTypeName = "Floor";
                                                 $content = $data->Occupied . '/' . $data->Capacity;
@@ -59,14 +50,15 @@
                                             @endif
 
                                             {{ $LocationTypeName }}
+                                            <br>
+                                            {{ $column }}-F{{ $rack_row }}
+                                            <hr>
                                             {{ $content }}
                                             <?php $found = true; ?> {{-- Set $found to true --}}
 
 
                                         @endif
 
-                                    @endif
-                                @endfor
 
                                 {{-- If data not found --}}
                                 @if(!$found)
