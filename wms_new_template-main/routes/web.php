@@ -41,6 +41,7 @@ Route::get('/floor-overview', function () {
 
 
 
+
 // User management
 Route::get('/user_list', [UsermanagementController::class, 'UserList'])->name('user.index');
 Route::get('/edit_user/{id}', [UsermanagementController::class, 'UserEdit']);

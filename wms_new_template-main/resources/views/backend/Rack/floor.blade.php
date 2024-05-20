@@ -12,14 +12,21 @@
 
        .content-container{
            padding-top: 20px;
+
+       }
+
+       .content-container1{
+           justify-content: center;
+           align-items: center;
        }
        .zone-container {
+        justify-content: center;
+           align-items: center;
            padding-top: 20px;
            padding-bottom: 80px;
            width: 100%;
            display: flex;
-           justify-content: center;
-           align-items: center;
+
        }
        .grid-container-zone1 {
            display: grid;
@@ -49,7 +56,6 @@
            margin-bottom: 5px;
            width: calc(100% - 10px); /* Adjust for gap */
            height: calc(100% - 10px); /* Adjust for gap */
-            /* Yellow color */
            border-radius: 10px;
            display: flex;
            justify-content: center;
@@ -94,45 +100,66 @@
            text-align: center;
        }
    </style>
-   <div class="content-container">
-       <div class="container">
-           <select id="rackSelector" class="form-select form-select-lg mb-3" aria-label="Default select example">
-               <option value="zone1">Zone 1</option>
-               <option value="zone2">Zone 2</option>
 
-           </select>
+<div class="content-container">
+    <div class="container">
+        <select id="rackSelector" class="form-select form-select-lg mb-3 w-25 " aria-label="Default select example">
+            <option value="zone1">Zone 1</option>
+            <option value="zone2">Zone 2</option>
+        </select>
 
-           <div id="contentArea">
-               <!-- Content will be dynamically updated here -->
-               <!-- To show default first-->
-               @include('backend.rack.zone1')
-           </div>
+        <div id="zone1Content" class="zone-container">
+            <!-- Content for Zone 1 -->
+            @include('backend.rack.zone1')
+        </div>
 
+        <div id="zone2Content" class="zone-container" style="display: none;">
+            <!-- Content for Zone 2 -->
+            @include('backend.rack.zone2')
+        </div>
 
-       </div>
+    </div>
+</div>
 
-       <script>
-           document.getElementById('rackSelector').addEventListener('change', function() {
-           const selectedValue = this.value;
-           const contentArea = document.getElementById('contentArea');
+<script>
+    document.getElementById('rackSelector').addEventListener('change', function() {
+        const selectedValue = this.value;
+        const zone1Content = document.getElementById('zone1Content');
+        const zone2Content = document.getElementById('zone2Content');
 
-           // Clear existing content
-           contentArea.innerHTML = '';
+        // Show the selected zone content and hide the other
+        if (selectedValue === 'zone1') {
+            zone1Content.style.display = 'block';
+            zone2Content.style.display = 'none';
+        } else if(selectedValue === 'zone2') {
+            zone1Content.style.display = 'none';
+            zone2Content.style.display = 'block';
+        } else {
+            // Handle other cases if needed
+        }
+    });
+</script>
 
-           // Add content based on the selected value
-           if (selectedValue === 'zone1') {
-               contentArea.innerHTML = `
-               @include('backend.rack.zone1')
-               `;
-           } else if(selectedValue === 'zone2') {
-               contentArea.innerHTML = `
-               @include('backend.rack.zone2')
-               `;
-           } else {
+<script>
+    // JavaScript to handle Bootstrap dropdown selection for both zones
+    // This script is applied globally to all dropdown items with data-zone attribute
 
-           }
-       });
-       </script>
-   </div>
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', event => {
+            const selectedValue = event.target.getAttribute('data-value');
+            const zone = event.target.getAttribute('data-zone');
+            handleViewSelection(selectedValue, zone);
+        });
+    });
 
-
+    // Function to handle view selection
+    function handleViewSelection(selectedValue, zone) {
+        if(selectedValue === 'icon') {
+            $(`#${zone}-icon`).show();
+            $(`#${zone}-table`).hide();
+        } else if(selectedValue === 'table') {
+            $(`#${zone}-icon`).hide();
+            $(`#${zone}-table`).show();
+        }
+    }
+</script>
