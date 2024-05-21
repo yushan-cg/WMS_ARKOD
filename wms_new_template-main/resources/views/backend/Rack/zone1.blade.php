@@ -129,10 +129,10 @@
                         if($data) {
                             if($data->Occupied >= $data->Capacity) {
                                 $stock_level = 'Full';
-                                $label = '<span class="badge badge-danger">Full</span>';
+                                $label = '<span class="badge bg-full">Full</span>';
                             } else {
-                                $stock_level = 'Partial';
-                                $label = '<span class="badge badge-warning">Partial</span>';
+                                $stock_level = 'Occupied';
+                                $label = '<span class="badge bg-occupied">Occupied</span>';
                             }
                         }
                         ?>

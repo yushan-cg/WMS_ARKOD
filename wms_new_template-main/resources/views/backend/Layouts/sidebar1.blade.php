@@ -18,33 +18,15 @@
                                 <li><a href="{{ URL::to('/list_product') }}"><i class="icon-Commit"><span
                                                 class="path1"></span><span class="path2"></span></i>Product List</a>
                                 </li>
-                                <li><a href="{{ URL::to('/pickup_list') }}"><i class="icon-Commit"><span
-                                    class="path1"></span><span class="path2"></span></i>Pickup List</a></li>
-                                <li><a href="{{ URL::to('/check_new_product') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>New Product
-                                        Request</a></li>
-                                <li><a href="{{ URL::to('/review_request') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Restock
-                                        Request</a></li>
-                                <li><a href="{{ URL::to('/add_product') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Add Product</a>
-                                </li>
                                 <li><a href="{{ URL::to('/quantity_list') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Product Stock
-                                        Level</a></li>
-                                <li><a href="{{ URL::to('/weekly-report') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Weekly Report</a>
-                                </li>
-                                <li><a href="{{ URL::to('/qr_product') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>QR Code
-                                        Scanner</a>
+                                                class="path1"></span><span class="path2"></span></i>Product Stock</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="treeview">
                             <a href="#">
                                 <i data-feather="user"></i>
-                                <span>Picker</span>
+                                <span>Pick Up</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-right pull-right"></i>
                                 </span>
@@ -54,51 +36,48 @@
                                                 class="path1"></span><span class="path2"></span></i>Picker Status</a>
                                 </li>
                                 <li><a href="{{ URL::to('/cart_index') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Assign Product</a>
+                                                class="path1"></span><span class="path2"></span></i>Assign Pick Up</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="treeview">
                             <a href="#">
                                 <i data-feather="truck"></i>
-                                <span>Order List</span>
+                                <span>Delivery</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-right pull-right"></i>
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ URL::to('/delivery_form_admin') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Delivery Order
-                                        Form</a></li>
-
                                 <li><a href="{{ URL::to('/delivery_order_list') }}"><i class="icon-Commit"><span
                                                 class="path1"></span><span class="path2"></span></i>Delivery Order
                                         List</a></li>
-
-                                <li><a href="{{ URL::to('/receive-return-stock') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Return Order</a>
-                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i data-feather="map-pin"></i>
+                                <span>Track</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-right pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ URL::to('/delivery_order_list') }}"><i class="icon-Commit"><span
+                                                class="path1"></span><span class="path2"></span></i>Track</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
                             <a href="#">
                                 <i data-feather="pie-chart"></i>
-                                <span>Storage Location</span>
+                                <span>Storage</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-right pull-right"></i>
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ URL::to('/racks') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Rack List</a></li>
-                                <li><a href="{{ URL::to('/floors') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Floor List</a>
-                                </li>
-                                <li><a href="{{ URL::to('/qr_floors') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Floor QR</a>
-                                </li>
-                                <li><a href="{{ URL::to('/qr_racks') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Rack QR</a>
+                                <li><a href="{{ URL::to('/floor-overview') }}"><i class="icon-Commit"><span
+                                                class="path1"></span><span class="path2"></span></i>Storage</a>
                                 </li>
                             </ul>
                         </li>
@@ -112,7 +91,10 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="{{ URL::to('/company_list') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Company List</a>
+                                                class="path1"></span><span class="path2"></span></i>Partner List/Vendor</a>
+                                </li>
+                                <li><a href="{{ URL::to('/company_list') }}"><i class="icon-Commit"><span
+                                                class="path1"></span><span class="path2"></span></i>Partner List/Cudtomer</a>
                                 </li>
                                 <li><a href="{{ URL::to('/user_list') }}"><i class="icon-Commit"><span
                                                 class="path1"></span><span class="path2"></span></i>User List</a>

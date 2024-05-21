@@ -10,20 +10,20 @@
 
 	<!-- Vendors Style-->
 	<link rel="stylesheet" href="{{ asset('assets/css/vendors_css.css') }}">
-	  
-	<!-- Style-->  
+
+	<!-- Style-->
 	<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('assets/css/skin_color.css') }}">
-     
+
   </head>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary fixed sidebar-collapse">
-	
+
 <div class="wrapper">
 	<div id="loader"></div>
-	
+
   <header class="main-header">
-	<div class="d-flex align-items-center logo-box justify-content-start">	
+	<div class="d-flex align-items-center logo-box justify-content-start">
 		<!-- Logo -->
 		<a href="{{ URL::to('/home') }}" class="logo">
 		  <!-- logo-->
@@ -42,8 +42,8 @@
             <span class="brand-text font-weight-light">Customer Panel</span>
         @endif
 		  </div>
-		</a>	
-	</div>  
+		</a>
+	</div>
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
@@ -68,11 +68,11 @@
 					</div>
 				</div>
 			</li>
-		</ul> 
+		</ul>
 	  </div>
-		
+
       <div class="navbar-custom-menu r-side">
-        <ul class="nav navbar-nav">	
+        <ul class="nav navbar-nav">
 			<!-- <li class="btn-group nav-item d-xl-inline-flex d-none">
 				<a href="findspace.html" class="waves-effect waves-light nav-link w-p100 full-screen btn-primary-light fs-18 l-h-26">
 					Find A Space
@@ -85,12 +85,12 @@
 			</li> -->
 			<!-- <li class="btn-group nav-item d-xl-inline-flex d-none">
 				<a href="help.html" class="waves-effect waves-light nav-link w-p100 full-screen btn-primary-light fs-18 l-h-26">
-					Help  
+					Help
 			    </a>
 			</li> -->
 			<!-- <li class="btn-group nav-item d-xl-inline-flex d-none">
 				<a href="q&a.html" class="waves-effect waves-light nav-link w-p100 full-screen btn-primary-light fs-18 l-h-26">
-					Q&A  
+					Q&A
 			    </a>
 			</li> -->
 			<li class="btn-group nav-item d-lg-inline-flex d-none">
@@ -148,7 +148,7 @@
 				  </li>
 				  <li>
 					<a href="#">
-					  <i class="fa fa-user text-primary"></i> Nunc fringilla lorem 
+					  <i class="fa fa-user text-primary"></i> Nunc fringilla lorem
 					</a>
 				  </li>
 				  <li>
@@ -162,15 +162,15 @@
 				  <a href="#">View all</a>
 			  </li>
 			</ul>
-		  </li>	
-		  
+		  </li>
+
           <!-- Control Sidebar Toggle Button -->
           <li class="btn-group nav-item">
               <a href="#" data-toggle="control-sidebar" title="Setting" class="waves-effect full-screen waves-light btn-danger-light">
 			  	<i data-feather="settings"></i>
 			  </a>
           </li>
-		  
+
 	      <!-- User Account-->
           <li class="dropdown user user-menu">
             <a href="#" class="waves-effect waves-light dropdown-toggle w-auto l-h-12 bg-transparent py-0 no-shadow" data-bs-toggle="dropdown" title="User">
@@ -206,7 +206,7 @@
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar">
-	  
+
 	<div class="rpanel-title"><span class="pull-right btn btn-circle btn-danger" data-toggle="control-sidebar"><i class="ion ion-close text-white"></i></span> </div>  <!-- Create the tabs -->
     <ul class="nav nav-tabs control-sidebar-tabs">
       <li class="nav-item"><a href="#control-sidebar-home-tab" data-bs-toggle="tab" class="active"><i class="mdi mdi-message-text"></i></a></li>
@@ -219,7 +219,7 @@
           <div class="flexbox">
 			<a href="javascript:void(0)" class="text-grey">
 				<i class="ti-more"></i>
-			</a>	
+			</a>
 			<p>Users</p>
 			<a href="javascript:void(0)" class="text-end text-grey"><i class="ti-plus"></i></a>
 		  </div>
@@ -277,8 +277,8 @@
 				<p>In posuere tortor vel...</p>
 				  <span>42 min ago</span>
 			  </div>
-			</div>			
-			
+			</div>
+
 			<div class="media py-10 px-0">
 			  <a class="avatar avatar-lg status-success" href="#">
 				<img src="{{ asset('assets/images/avatar/1.jpg') }}" alt="...">
@@ -330,7 +330,7 @@
 				  <span>42 min ago</span>
 			  </div>
 			</div>
-			  
+
 		  </div>
 
       </div>
@@ -340,7 +340,7 @@
           <div class="flexbox">
 			<a href="javascript:void(0)" class="text-grey">
 				<i class="ti-more"></i>
-			</a>	
+			</a>
 			<p>Todo List</p>
 			<a href="javascript:void(0)" class="text-end text-grey"><i class="ti-plus"></i></a>
 		  </div>
@@ -467,15 +467,15 @@
     </div>
   </aside>
   <!-- /.control-sidebar -->
-  
+
   <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
-  
+
 </div>
 <!-- ./wrapper -->
-	
+
 	<!-- ./side demo panel -->
-	<!-- <div class="sticky-toolbar">	    
+	<!-- <div class="sticky-toolbar">
 	    <a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="Buy Now" class="waves-effect waves-light btn btn-success btn-flat mb-5 btn-sm" target="_blank">
 			<span class="icon-Money"><span class="path1"></span><span class="path2"></span></span>
 		</a>
@@ -487,7 +487,7 @@
 		</a>
 	</div> -->
 	<!-- Sidebar -->
-		
+
 	<!-- <div id="chat-box-body">
 		<div id="chat-circle" class="waves-effect waves-circle btn btn-circle btn-lg btn-warning l-h-70">
             <div id="chat-overlay"></div>
@@ -521,7 +521,7 @@
                         <span class="icon-Question-circle me-15"><span class="path1"></span><span class="path2"></span></span>
                         Help</a>
 					<a class="dropdown-item fs-16" href="#">
-                        <span class="icon-Notifications me-15"><span class="path1"></span><span class="path2"></span></span> 
+                        <span class="icon-Notifications me-15"><span class="path1"></span><span class="path2"></span></span>
                         Privacy</a>
                   </div>
                 </div>
@@ -535,11 +535,11 @@
                 <div class="chat-box-toggle">
                     <button id="chat-box-toggle" class="waves-effect waves-circle btn btn-circle btn-danger-light h-40 w-40 rounded-circle l-h-45" type="button">
                       <span class="icon-Close fs-22"><span class="path1"></span><span class="path2"></span></span>
-                    </button>                    
+                    </button>
                 </div>
             </div>
             <div class="chat-box-body">
-                <div class="chat-box-overlay">   
+                <div class="chat-box-overlay">
                 </div>
                 <div class="chat-logs">
                     <div class="chat-msg user">
@@ -567,8 +567,8 @@
                             </span>
                         </div>
                         <div class="cm-msg-text">
-                           My name is Anne Clarc.         
-                        </div>        
+                           My name is Anne Clarc.
+                        </div>
                     </div>
                     <div class="chat-msg user">
                         <div class="d-flex align-items-center">
@@ -586,13 +586,13 @@
                     </div>
                 </div>chat-log -->
             <!-- </div>
-            <div class="chat-input">      
+            <div class="chat-input">
                 <form>
                     <input type="text" id="chat-input" placeholder="Send a message..."/>
                     <button type="submit" class="chat-submit" id="chat-submit">
                         <span class="icon-Send fs-22"></span>
                     </button>
-                </form>      
+                </form>
             </div>
 		</div>
 	</div> -->
@@ -602,24 +602,24 @@
     <script>
         $(document).ready(function() {
             updateProceedToPackingButton();
-    
+
             // Listen for changes to the table rows
             $('.status-cell').on('DOMSubtreeModified', function() {
                 updateProceedToPackingButton();
             });
         });
-    
+
         function updateProceedToPackingButton() {
             var pendingRows = $('td:contains("Pending")').parent();
             var proceedButton = $('#proceed-to-packing');
-    
+
             if (pendingRows.length > 0) {
                 proceedButton.prop('disabled', true);
             } else {
                 proceedButton.prop('disabled', false);
             }
         }
-    
+
         $('#proceed-to-packing').click(function() {
             window.location.href = "{{ route('picker.history') }}";
         });
