@@ -3,6 +3,8 @@
 @section('title', 'Floor Overview')
 
 @section('content')
+<a href="{{ route('generate.waybill') }}" target="_blank">Generate Waybill</a>
+
 <div class="container p-3 text-center">
     <div class="d-flex mt-20">
         <div class="d-flex">
