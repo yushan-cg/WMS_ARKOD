@@ -12,7 +12,7 @@ class WaybillController extends Controller
     public function generateWaybill()
     {
         $data = [
-            'date' => date('m/d/Y'),
+            'date' => date('m/d/Y'), //Outputs: 23-03-2024
             'waybill_number' => 'INV-123456',
             'customer_id' => 'CUST1234',
             'company_name' => 'Your Company Name',

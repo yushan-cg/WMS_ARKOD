@@ -31,6 +31,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/waybill', [WaybillController::class, 'generateWaybill'])->name('generate.waybill');
+Route::get('/invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
 
 //Route::get('generate-invoice-pdf', array('as'=> 'generate.invoice.pdf', 'uses' => 'PDFController@generateInvoicePDF'));
 

@@ -4,42 +4,38 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Order;
-use App\Models\Company;
-use Barryvdh\DomPDF\PDF;
-
-
-
-
-
+use Barryvdh\DomPDF\Facade\PDF;
+use Illuminate\Http\Response;
 
 class InvoiceController extends Controller
 {
-    public function show($orderId)
+    public function generateInvoice()
     {
-        // Retrieve the order details
-        $order = Order::findOrFail($orderId);
-        
-        // Retrieve the company details
-        $company = Company::findOrFail($order->company_id);
-        
-        // Generate the invoice PDF using Dompdf
-        $pdf = app('dompdf.wrapper')->loadView('backend.invoice.invoice', compact('order', 'company'));
-        
-        // Return the PDF for download or display
-        return $pdf->stream('invoice.pdf');
+        $data = [
+            'date' => date('m/d/Y'),
+            'waybill_number' => 'INV-123456',
+            'customer_id' => 'CUST1234',
+            'company_name' => 'Your Company Name',
+            'company_logo' => asset('assets/images/waybill-banner.png'), // Ensure you have a logo image in your public folder
+            'items' => [
+                ['description' => 'Item 1', 'quantity' => 2, 'price' => 50.00],
+                ['description' => 'Item 2', 'quantity' => 1, 'price' => 75.00],
+                // Add more items as needed
+            ],
+            'total' => 175.00,
+        ];
+
+        $pdf = PDF::loadView('backend/invoice/invoice', $data);
+        //return $pdf->download('waybill.pdf');
+
+        // Return the PDF as a response with appropriate headers
+        return new Response(
+            $pdf->output(),
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="invoice.pdf"' // Display PDF in browser
+            ]
+        );
     }
-
-    public function download($id)
-{
-    $orderGroup = Order::where('id', $id)->get();
-    $companyId = $orderGroup->first()->product->company_id;
-    $company = Company::find($companyId);
-
-    $pdf = app(PDF::class)->loadView('backend.invoice.invoice_pdf', compact('orderGroup', 'company'));
-
-    return $pdf->download('invoice.pdf');
-}
-
-    
 }
