@@ -21,6 +21,7 @@ use App\Http\Controllers\backend\ReturnStockController;
 use App\Http\Controllers\backend\ReportController;
 use App\Http\Controllers\backend\ProductReportController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\backend\WaybillController;
 
@@ -42,7 +43,7 @@ Route::get('/floor-overview', function () {
     return view('backend.rack.floorOverview');
 })->name('floor.overview');
 
-
+Route::post('register', [RegisterController::class, 'register']);
 
 
 // User management
