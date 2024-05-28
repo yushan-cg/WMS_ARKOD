@@ -22,15 +22,18 @@ use App\Http\Controllers\backend\ReportController;
 use App\Http\Controllers\backend\ProductReportController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\PickupController;
-
-
-
+use App\Http\Controllers\backend\WaybillController;
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
 Auth::routes();
+
+Route::get('/waybill', [WaybillController::class, 'generateWaybill'])->name('generate.waybill');
+Route::get('/invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
+
+//Route::get('generate-invoice-pdf', array('as'=> 'generate.invoice.pdf', 'uses' => 'PDFController@generateInvoicePDF'));
 
 Route::get('/homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
 

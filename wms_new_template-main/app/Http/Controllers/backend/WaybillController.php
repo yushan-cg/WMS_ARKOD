@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Response;
 
-class InvoiceController extends Controller
+class WaybillController extends Controller
 {
-    public function generateInvoice()
+    public function generateWaybill()
     {
         $data = [
-            'date' => date('m/d/Y'),
+            'date' => date('m/d/Y'), //Outputs: 23-03-2024
             'waybill_number' => 'INV-123456',
             'customer_id' => 'CUST1234',
             'company_name' => 'Your Company Name',
@@ -25,7 +25,7 @@ class InvoiceController extends Controller
             'total' => 175.00,
         ];
 
-        $pdf = PDF::loadView('backend/invoice/invoice', $data);
+        $pdf = PDF::loadView('backend/invoice/waybill', $data);
         //return $pdf->download('waybill.pdf');
 
         // Return the PDF as a response with appropriate headers
@@ -34,7 +34,7 @@ class InvoiceController extends Controller
             200,
             [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="invoice.pdf"' // Display PDF in browser
+                'Content-Disposition' => 'inline; filename="waybill.pdf"' // Display PDF in browser
             ]
         );
     }
