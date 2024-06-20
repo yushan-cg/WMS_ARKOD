@@ -24,6 +24,9 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\backend\WaybillController;
+use App\Http\Controllers\backend\ClientController;
+use App\Http\Controllers\backend\CustomerController;
+
 
 Route::get('/', function () {
     return view('auth.login');
@@ -44,6 +47,24 @@ Route::get('/floor-overview', function () {
 })->name('floor.overview');
 
 Route::post('register', [RegisterController::class, 'register']);
+
+//client
+//Route::get('/client_list', [ClientController::class, 'index'])->name('backend.company.client_list.index');
+Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+// Route::get('/clients/{clientId}/create-customer', [CustomerController::class, 'create'])->name('customers.create');
+// Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+Route::put('/clients/{id}', [ClientController::class, 'update'])->name('clients.update');
+Route::get('/clients/{id}/edit', 'ClientController@edit');
+Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->name('clients.destroy');
+
+
+//customer
+Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
+Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
+Route::get('customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
+Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+
 
 
 // User management

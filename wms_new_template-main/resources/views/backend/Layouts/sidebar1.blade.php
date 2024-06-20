@@ -90,11 +90,8 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ URL::to('/company_list') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Partner List/Vendor</a>
-                                </li>
-                                <li><a href="{{ URL::to('/company_list') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Partner List/Cudtomer</a>
+                                <li><a href="{{ URL::to('/clients') }}"><i class="icon-Commit"><span
+                                                class="path1"></span><span class="path2"></span></i>Client</a>
                                 </li>
                                 <li><a href="{{ URL::to('/user_list') }}"><i class="icon-Commit"><span
                                                 class="path1"></span><span class="path2"></span></i>User List</a>

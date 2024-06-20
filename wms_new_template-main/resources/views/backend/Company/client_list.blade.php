@@ -1,6 +1,5 @@
 @extends('backend.layouts.app')
 @section('content')
-{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 <title>Client List</title>
 <style>
     .active-row {
@@ -30,8 +29,12 @@
 
 <!-- Main content -->
 <section class="content">
+    @if(session('success'))
+        <div id="successAlert" class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="box" style="padding-bottom: 20px;">
-        <!-- Include the customer table -->
         @include('backend.company.customer-table')
     </div>
     <div class="row">
@@ -62,17 +65,72 @@
                                         <td>{{ $client['attention'] }}</td>
                                         <td>{{ $client['tel'] }}</td>
                                         <td>
-                                            <button class="text-info me-10 add-customer-btn" style="border: none; background: none;" data-client-id="{{ $client['id'] }}" data-bs-toggle="modal" data-bs-target="#addModal" title="Add Customer">
-                                                <i class="ti-plus" alt="alert"></i>
-                                            </button>
-                                            <button class="text-info me-10 update-customer-btn" style="border: none; background: none;" data-client-id="{{ $client->id }}" data-bs-toggle="modal" data-bs-target="#updateModal" title="Update Client">
-                                                <i class="ti-marker-alt" alt="alert"></i>
-                                            </button>
-                                            <button href="" class="text-danger sa-params" style="border: none; background: none;" data-bs-toggle="tooltip" data-bs-original-title="Delete" alt="alert">
-                                                <i class="ti-trash" alt="alert"></i>
-                                            </button>
+                                            <div class="d-flex align-items-center">
+                                                <!-- Add Customer Button -->
+                                                <button class="text-info me-2 add-customer-btn" style="border: none; background: none;" data-client-id="{{ $client['id'] }}" data-bs-toggle="modal" data-bs-target="#addModal" title="Add Customer">
+                                                    <i class="ti-plus" alt="alert"></i>
+                                                </button>
+
+                                                <!-- Update Client Button -->
+                                                <button class="text-info me-2 update-client-btn" style="border: none; background: none;" data-bs-toggle="modal" data-bs-target="#updateModalClient{{ $client['id'] }}" title="Update Client">
+                                                    <i class="ti-marker-alt" alt="alert"></i>
+                                                </button>
+
+                                                <!-- Delete Form -->
+                                                <form id="deleteForm{{ $client->id }}" action="{{ route('clients.destroy', ['id' => $client->id]) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="text-danger sa-params" style="border: none; background: none;" data-bs-toggle="tooltip" data-bs-original-title="Delete" alt="alert" onclick="confirmDelete('{{ $client->id }}')">
+                                                        <i class="ti-trash" alt="alert"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+
+
                                         </td>
                                     </tr>
+
+                                    <!-- Modal for updating client -->
+                                    <div class="modal fade" id="updateModalClient{{ $client['id'] }}" tabindex="-1" aria-labelledby="updateModalClientLabel{{ $client['id'] }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="updateModalClientLabel{{ $client['id'] }}">Update Client</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Update Client Form -->
+                                                    <form id="updateClientForm{{ $client['id'] }}" action="{{ route('clients.update', $client['id']) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div class="form-group">
+                                                            <label for="name{{ $client['id'] }}">Client Name</label>
+                                                            <input type="text" name="name" class="form-control" id="name{{ $client['id'] }}" value="{{ $client['name'] }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="email{{ $client['id'] }}">Client Email</label>
+                                                            <input type="email" name="email" class="form-control" id="email{{ $client['id'] }}" value="{{ $client['email'] }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="address{{ $client['id'] }}">Client Address</label>
+                                                            <input type="text" name="address" class="form-control" id="address{{ $client['id'] }}" value="{{ $client['address'] }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="attention{{ $client['id'] }}">Attention</label>
+                                                            <input type="text" name="attention" class="form-control" id="attention{{ $client['id'] }}" value="{{ $client['attention'] }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="tel{{ $client['id'] }}">Telephone</label>
+                                                            <input type="text" name="tel" class="form-control" id="tel{{ $client['id'] }}" value="{{ $client['tel'] }}">
+                                                        </div>
+                                                        <div class="d-flex justify-content-center">
+                                                            <button type="submit" class="btn btn-primary">Update Client</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>
@@ -82,93 +140,50 @@
         </div>
     </div>
 
-
-<!--Add Modal -->
-<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addModalLabel">Add Customer</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Add Customer Form -->
-                <form id="addCustomerForm" action="{{ route('customers.store') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="client_id" id="client_id" value="{{ $client->id }}">
-                    <div class="form-group">
-                        <label for="name">Customer Name</label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Enter customer name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Customer Email</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Enter customer email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Customer Address</label>
-                        <input type="text" name="address" class="form-control" id="address" placeholder="Enter customer address" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="attention">Attention</label>
-                        <input type="text" name="attention" class="form-control" id="attention" placeholder="Enter attention" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="tel">Telephone</label>
-                        <input type="text" name="tel" class="form-control" id="tel" placeholder="Enter telephone" required>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary">Add Customer</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--Update Modal -->
-<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel">Update Client</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Update Client Form -->
-                <form id="updateClientForm" action="{{ route('clients.update', $client->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" name="client_id" id="client_id" value="{{ $client->id }}">
-
-                    {{-- <input type="hidden" name="client_id" id="update_client_id" value=""> --}}
-                    <div class="form-group">
-                        <label for="name">Client Name</label>
-                        <input type="text" name="name" class="form-control" id="update_name" value="{{ $client->name }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Client Email</label>
-                        <input type="email" name="email" class="form-control" id="update_email" value="{{ $client->email }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Client Address</label>
-                        <input type="text" name="address" class="form-control" id="update_address" value="{{ $client->address }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="attention">Attention</label>
-                        <input type="text" name="attention" class="form-control" id="update_attention" value="{{ $client->attention }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="tel">Telephone</label>
-                        <input type="text" name="tel" class="form-control" id="update_tel" value="{{ $client->tel }}">
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary">Update Client</button>
-                    </div>
-                </form>
+    <!-- Add Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add Customer Form -->
+                    <form id="addCustomerForm" action="{{ route('customers.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="client_id" id="client_id">
+                        <div class="form-group">
+                            <label for="name">Customer Name</label>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Enter customer name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Customer Email</label>
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Enter customer email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Customer Address</label>
+                            <input type="text" name="address" class="form-control" id="address" placeholder="Enter customer address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="attention">Attention</label>
+                            <input type="text" name="attention" class="form-control" id="attention" placeholder="Enter attention" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tel">Telephone</label>
+                            <input type="text" name="tel" class="form-control" id="tel" placeholder="Enter telephone" required>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary">Add Customer</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+
+
 
 
 </section>
@@ -210,12 +225,6 @@
             $('#client_id').val(clientId);
         });
 
-        // Handle "Update Customer" button click
-        $('.update-customer-btn').click(function() {
-            var clientId = $(this).data('client-id');
-            $('#client_id').val(clientId);
-        });
-
         // Initialize DataTable with pagination
         $('#clientlist').DataTable({
             "paging": true, // Enable pagination
@@ -230,19 +239,19 @@
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
     });
+
+    //delete confirmation
+    function confirmDelete(clientId) {
+        if (confirm('Are you certain you wish to remove this record?')) {
+            document.getElementById('deleteForm' + clientId).submit();
+        }
+    }
+
+    // Automatically close the success alert after 3 seconds
+    setTimeout(function() {
+        document.getElementById('successAlert').style.display = 'none';
+    }, 3000); // 3000 milliseconds = 3 seconds
 </script>
-<script>
-// Update Client Modal
-// $('#updateModal').on('show.bs.modal', function (event) {
-//     var button = $(event.relatedTarget); // Button that triggered the modal
-//     var clientId = button.data('client-id'); // Extract client ID from data attribute
-//     var modal = $(this);
-//     modal.find('.modal-body #update_client_id').val(clientId); // Set the value of the hidden input field in the modal
-// });
-
-</script>
-
-
 
 @endsection
 @section('page content overlay')
