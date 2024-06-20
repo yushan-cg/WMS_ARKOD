@@ -13,6 +13,8 @@
 		el.innerHTML = '<span style="font-family: \'themify\'">' + entity + '</span>' + html;
 	}
 	var icons = {
+
+        'ti-plus': '&#xe616;',
 		'ti-wand': '&#xe600;',
 		'ti-volume': '&#xe601;',
 		'ti-user': '&#xe602;',
