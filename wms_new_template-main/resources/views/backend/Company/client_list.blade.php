@@ -42,7 +42,12 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Client List</h3>
+                    {{-- add button for client --}}
+                    <button class="btn btn-success" style="width: 150px; float: right; padding-right: 5px;" data-bs-toggle="modal" data-bs-target="#addModalClient" title="Add Client">Add Client</button>
+
                 </div>
+
+
                 <div class="box-body">
                     <div class="table-responsive">
                         <table id="clientlist" class="table table-hover no-wrap" data-page-size="10">
@@ -67,7 +72,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <!-- Add Customer Button -->
-                                                <button class="text-info me-2 add-customer-btn" style="border: none; background: none;" data-client-id="{{ $client['id'] }}" data-bs-toggle="modal" data-bs-target="#addModal" title="Add Customer">
+                                                <button class="text-info me-2 add-customer-btn" style="border: none; background: none;" data-client-id="{{ $client['id'] }}" data-bs-toggle="modal" data-bs-target="#addModalCustomer" title="Add Customer">
                                                     <i class="ti-plus" alt="alert"></i>
                                                 </button>
 
@@ -90,7 +95,7 @@
                                         </td>
                                     </tr>
 
-                                    <!-- Modal for updating client -->
+<!-- Modal for updating client -->
                                     <div class="modal fade" id="updateModalClient{{ $client['id'] }}" tabindex="-1" aria-labelledby="updateModalClientLabel{{ $client['id'] }}" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -140,12 +145,53 @@
         </div>
     </div>
 
-    <!-- Add Modal -->
-    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <!-- Add Modal Client-->
+    <div class="modal fade" id="addModalClient" tabindex="-1" aria-labelledby="addModalClientLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">Add Customer</h5>
+                    <h5 class="modal-title" id="addModalClientLabel">Add Client</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add Client Form -->
+                    <form id="addClientForm" action="{{ route('clients.store') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="nameClient">Client Name</label>
+                            <input type="text" name="name" class="form-control" id="nameClient" placeholder="Enter client name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="emailClient">Client Email</label>
+                            <input type="email" name="email" class="form-control" id="emailClient" placeholder="Enter client email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="addressClient">Client Address</label>
+                            <input type="text" name="address" class="form-control" id="addressClient" placeholder="Enter client address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="attentionClient">Attention</label>
+                            <input type="text" name="attention" class="form-control" id="attentionClient" placeholder="Enter attention" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telClient">Telephone</label>
+                            <input type="text" name="tel" class="form-control" id="telClient" placeholder="Enter telephone" required>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary">Add Client</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Modal Customer-->
+    <div class="modal fade" id="addModalCustomer" tabindex="-1" aria-labelledby="addModalCustomerLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalCustomerLabel">Add Customer</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -154,24 +200,24 @@
                         @csrf
                         <input type="hidden" name="client_id" id="client_id">
                         <div class="form-group">
-                            <label for="name">Customer Name</label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Enter customer name" required>
+                            <label for="nameCustomer">Customer Name</label>
+                            <input type="text" name="name" class="form-control" id="nameCustomer" placeholder="Enter customer name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Customer Email</label>
-                            <input type="email" name="email" class="form-control" id="email" placeholder="Enter customer email" required>
+                            <label for="emailCustomer">Customer Email</label>
+                            <input type="email" name="email" class="form-control" id="emailCustomer" placeholder="Enter customer email" required>
                         </div>
                         <div class="form-group">
-                            <label for="address">Customer Address</label>
-                            <input type="text" name="address" class="form-control" id="address" placeholder="Enter customer address" required>
+                            <label for="addressCustomer">Customer Address</label>
+                            <input type="text" name="address" class="form-control" id="addressCustomer" placeholder="Enter customer address" required>
                         </div>
                         <div class="form-group">
-                            <label for="attention">Attention</label>
-                            <input type="text" name="attention" class="form-control" id="attention" placeholder="Enter attention" required>
+                            <label for="attentionCustomer">Attention</label>
+                            <input type="text" name="attention" class="form-control" id="attentionCustomer" placeholder="Enter attention" required>
                         </div>
                         <div class="form-group">
-                            <label for="tel">Telephone</label>
-                            <input type="text" name="tel" class="form-control" id="tel" placeholder="Enter telephone" required>
+                            <label for="telCustomer">Telephone</label>
+                            <input type="text" name="tel" class="form-control" id="telCustomer" placeholder="Enter telephone" required>
                         </div>
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">Add Customer</button>

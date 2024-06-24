@@ -51,12 +51,11 @@ Route::post('register', [RegisterController::class, 'register']);
 //client
 //Route::get('/client_list', [ClientController::class, 'index'])->name('backend.company.client_list.index');
 Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
-// Route::get('/clients/{clientId}/create-customer', [CustomerController::class, 'create'])->name('customers.create');
-// Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+Route::get('/clients/create', [ClientController::class, 'create'])->name('clients.create');
+Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
 Route::put('/clients/{id}', [ClientController::class, 'update'])->name('clients.update');
 Route::get('/clients/{id}/edit', 'ClientController@edit');
 Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->name('clients.destroy');
-
 
 //customer
 Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');

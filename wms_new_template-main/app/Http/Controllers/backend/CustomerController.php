@@ -17,10 +17,10 @@ class CustomerController extends Controller
         return view('customers.index', compact('customers'));
     }
 
-    public function create()
-    {
-        return view('customers.create');
-    }
+    // public function create()
+    // {
+    //     return view('customers.create');
+    // }
 
     // Handle the form submission
     public function store(Request $request)
@@ -28,7 +28,7 @@ class CustomerController extends Controller
         // Validate the request
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:clients,email',
+            'email' => 'required|email',
             'address' => 'required|string',
             'attention' => 'required|string',
             'tel' => 'required|string',
@@ -55,12 +55,13 @@ class CustomerController extends Controller
         // Validate the incoming request data
         $validatedData = $request->validate([
 
+            'client_id' => 'required|exists:clients,id',
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:clients,email',
+            'email' => 'required|email',
             'address' => 'required|string',
             'attention' => 'required|string',
-            'tel' => 'required|string',
-            'client_id' => 'required|exists:clients,id'
+            'tel' => 'required|string'
+
         ]);
 
         // Update the task with the validated data

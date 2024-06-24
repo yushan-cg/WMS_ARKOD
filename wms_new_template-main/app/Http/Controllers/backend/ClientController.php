@@ -17,11 +17,32 @@ class ClientController extends Controller
         return view('backend.company.client_list', compact('clients'));
     }
 
+    // Handle the form submission
+    public function store(Request $request)
+    {
+        // Validate the request
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'address' => 'required|string',
+            'attention' => 'required|string',
+            'tel' => 'required|string'
+        ]);
+
+        Client::create($validatedData);
+
+        // Redirect back with a success message
+       return redirect()->route('clients.index')->with('success', 'Client added successfully');
+       //return response()->json($request->all());
+    }
+
     public function edit($id)
     {
-        $client = Client::find($id); // Assuming you have a 'Client' model
+        $client = Client::findorFail($id); // Assuming you have a 'Client' model
         return view('clients.edit', compact('client'));
     }
+
+
 
 
     public function update(Request $request, $id)
@@ -32,7 +53,7 @@ class ClientController extends Controller
         // Validate the incoming request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:clients,email,'.$id,
+            'email' => 'required|email',
             // 'email' => 'required|email|unique:clients,email,'.$id,
             'address' => 'required|string',
             'attention' => 'required|string',
