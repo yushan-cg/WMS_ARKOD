@@ -236,6 +236,32 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i data-feather="users"></i>
+                                <span>Customer Management</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-right pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ URL::to('/customer_detail') }}"><i class="icon-Commit"><span
+                                    class="path1"></span><span class="path2"></span></i>Customer Management</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i data-feather="user"></i>
+                                <span>User Detail</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-right pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ URL::to('/user_detail') }}"><i class="icon-Commit"><span
+                                    class="path1"></span><span class="path2"></span></i>User Detail</a></li>
+                            </ul>
+                        </li>
                     @endif
                     <li class="treeview">
                         <a href="#">

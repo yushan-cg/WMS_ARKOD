@@ -48,6 +48,18 @@ Route::get('/floor-overview', function () {
 
 Route::post('register', [RegisterController::class, 'register']);
 
+//user detail - role 3
+// Route::get('/user_detail', function () {
+//     return view('backend.user.user_detail');
+// });
+Route::get('/user_detail', [ClientController::class, 'index'])->name('clients.index');
+Route::middleware('auth')->group(function () {
+    Route::resource('clients', ClientController::class);
+});
+
+
+
+
 //client
 //Route::get('/client_list', [ClientController::class, 'index'])->name('backend.company.client_list.index');
 Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
