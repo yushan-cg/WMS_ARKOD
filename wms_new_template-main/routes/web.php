@@ -53,6 +53,9 @@ Route::post('register', [RegisterController::class, 'register']);
 //     return view('backend.user.user_detail');
 // });
 Route::get('/user_detail', [ClientController::class, 'index'])->name('clients.index');
+Route::get('/customer_detail', [CustomerController::class, 'index'])->name('customers.index');
+
+
 Route::middleware('auth')->group(function () {
     Route::resource('clients', ClientController::class);
 });
