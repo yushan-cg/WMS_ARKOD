@@ -10,45 +10,56 @@ class Product extends Model
 {
     use HasFactory;
 
+    use HasFactory;
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function rack()
+    public function partner()
     {
-        return $this->belongsTo(Rack::class);
+        return $this->belongsTo(Partner::class);
     }
 
-    public function floor()
-    {
-        return $this->belongsTo(Floor::class);
-    }
+    // public function users()
+    // {
+    //     return $this->belongsToMany(User::class);
+    // }
 
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
+    // public function rack()
+    // {
+    //     return $this->belongsTo(Rack::class);
+    // }
 
-    public function productreport()
-    {
-        return $this->belongsTo(ProductReport::class);
-    }
+    // public function floor()
+    // {
+    //     return $this->belongsTo(Floor::class);
+    // }
 
-    public function deliveries()
-    {
-        return $this->belongsToMany(Delivery::class, 'delivery_product');
-    }
+    // public function company()
+    // {
+    //     return $this->belongsTo(Company::class);
+    // }
 
-    public function pickers()
-    {
-        return $this->hasMany(Picker::class);
-    }
+    // public function productreport()
+    // {
+    //     return $this->belongsTo(ProductReport::class);
+    // }
 
-    public function returnStocks()
-    {
-        return $this->belongsToMany(ReturnStock::class, 'pickers');
-    }
+    // public function deliveries()
+    // {
+    //     return $this->belongsToMany(Delivery::class, 'delivery_product');
+    // }
+
+    // public function pickers()
+    // {
+    //     return $this->hasMany(Picker::class);
+    // }
+
+    // public function returnStocks()
+    // {
+    //     return $this->belongsToMany(ReturnStock::class, 'pickers');
+    // }
 
 }

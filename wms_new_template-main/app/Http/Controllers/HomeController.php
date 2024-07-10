@@ -57,20 +57,21 @@ class HomeController extends Controller
 
     //For Customer
 
-    $userProductsCount = Product::where('user_id', $user->id)->count();
-    $completedReturnStocksCount = ReturnStock::where('user_id', $user->id)
-    ->where('receive_status', 'Received')
-    ->distinct('return_no')
-    ->count();
-    $receivedDeliveryCount = Delivery::where('user_id', $user->id)
-    ->distinct('order_no')
-    ->count();
+    // $userProductsCount = Product::where('user_id', $user->id)->count();
+    // $completedReturnStocksCount = ReturnStock::where('user_id', $user->id)
+    // ->where('receive_status', 'Received')
+    // ->distinct('return_no')
+    // ->count();
+    // $receivedDeliveryCount = Delivery::where('user_id', $user->id)
+    // ->distinct('order_no')
+    // ->count();
 
 
-    return view('home', compact('productsCount', 'ordersCount', 'usersCount','userProductsCount', 'completedOrdersCount', 'completedReturnStocksCount','receivedDeliveryCount', 'completedReturnOrdersCount', 'incomingReturnOrderTask' , 'incomingDeliveryTask'));
+   //return view('home', compact('productsCount', 'ordersCount', 'usersCount','userProductsCount', 'completedOrdersCount', 'completedReturnStocksCount','receivedDeliveryCount', 'completedReturnOrdersCount', 'incomingReturnOrderTask' , 'incomingDeliveryTask'));
+    return view('home');
 
 
     }
 
-    
+
 }

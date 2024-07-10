@@ -15,8 +15,8 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ URL::to('/list_product') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Product List</a>
+                                <li><a href="{{ route('product.index') }}"><i class="icon-Commit"><span
+                                    class="path1"></span><span class="path2"></span></i>Product List</a>
                                 </li>
                                 <li><a href="{{ URL::to('/quantity_list') }}"><i class="icon-Commit"><span
                                                 class="path1"></span><span class="path2"></span></i>Product Stock</a>

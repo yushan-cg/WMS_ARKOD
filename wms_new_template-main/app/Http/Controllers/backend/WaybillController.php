@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Response;
+//carbon use for time and date
+use Carbon\Carbon;
+
 
 class WaybillController extends Controller
 {

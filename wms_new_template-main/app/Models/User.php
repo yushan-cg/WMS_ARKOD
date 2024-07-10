@@ -54,4 +54,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Client::class);
     }
+
+    //add from shan
+    public function partners()
+    {
+        return $this->hasMany(Partner::class);
+    }
 }

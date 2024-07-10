@@ -39,7 +39,8 @@ Route::get('/invoice', [InvoiceController::class, 'generateInvoice'])->name('gen
 
 //Route::get('generate-invoice-pdf', array('as'=> 'generate.invoice.pdf', 'uses' => 'PDFController@generateInvoicePDF'));
 
-Route::get('/homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
+//homepage ni redundent boleh delete
+//Route::get('/homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
 
 //Floors Me
 Route::get('/floor-overview', function () {
@@ -60,7 +61,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('clients', ClientController::class);
 });
 
-
+// Operations/Delivery & Waybill part shan
+// Route::prefix('transfer')->group(function () {
+//     Route::get('/delivery', [ProductController::class, '#'])->name('dolist');
+// });
 
 
 //client
@@ -81,39 +85,46 @@ Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('
 
 
 
-// User management
+// User management = belum ada function. xbuat org
 Route::get('/user_list', [UsermanagementController::class, 'UserList'])->name('user.index');
 Route::get('/edit_user/{id}', [UsermanagementController::class, 'UserEdit']);
 Route::post('/update_user/{id}', [UsermanagementController::class, 'UserUpdate']);
 Route::get('/delete_user/{id}', [UsermanagementController::class, 'UserDelete']);
 
 // Admin side product management
-Route::get('list_product', [ProductController::class, 'ProductList'])->name('product.index');
-Route::get('/add_product', [ProductController::class, 'ProductAdd'])->name('productadd');
-Route::post('/insert_product', [ProductController::class, 'ProductInsert']);
-Route::get('/edit_product/{id}', [ProductController::class, 'ProductEdit']);
-Route::post('/update_product/{id}', [ProductController::class, 'ProductUpdate']);
-Route::get('/delete_product/{id}', [ProductController::class, 'ProductDelete']);
-Route::get('/qr_product',[ProductController::class, 'ProductQR']);
-Route::get('/getProductQRInfo/{productCode}',[ProductController::class, 'getProductQRInfo']);
+Route::prefix('product')->group(function () {
+    Route::get('/list', [ProductController::class, 'listProduct'])->name('product.index');
+    Route::post('/insert', [ProductController::class, 'insertProduct'])->name('insert_product');
+    Route::patch('/update/{id}', [ProductController::class, 'updateProduct'])->name('update_product');
+    Route::delete('/delete/{id}', [ProductController::class, 'deleteProduct'])->name('delete_product');
+});
+
+// Route::get('list_product', [ProductController::class, 'ProductList'])->name('product.index');
+// Route::get('/add_product', [ProductController::class, 'ProductAdd'])->name('productadd');
+// Route::post('/insert_product', [ProductController::class, 'ProductInsert']);
+// // Route::get('/edit_product/{id}', [ProductController::class, 'ProductEdit']);
+// Route::post('/update_product/{id}', [ProductController::class, 'ProductUpdate']);
+// Route::get('/delete_product/{id}', [ProductController::class, 'ProductDelete']);
+// Route::get('/qr_product',[ProductController::class, 'ProductQR']);
+// Route::get('/getProductQRInfo/{productCode}',[ProductController::class, 'getProductQRInfo']);
 
 // Customer side product restock
-Route::get('/restock_form', [ProductController::class, 'RestockForm'])->name('restockform');
-Route::get('/restock_form/{id}', [ProductController::class, 'RestockItem'])->name('restock');
-Route::post('/send_request_restock', [ProductController::class, 'SendRequestProduct'])->name('requestproduct');
-Route::get('/request_restock_status', [ProductController::class, 'showRestockRequests'])->name('showstatus');
-Route::get('/review_request', [ProductController::class, 'reviewRestockRequest'])->name('reviewrequest');
-Route::get('remove_request/{id}', [ProductController::class, 'RemoveRequest']);
-Route::get('approve_request/{id}', [ProductController::class, 'approveRequest']);
-Route::get('/customer_add_product', [ProductController::class, 'CustomerAddProductForm'])->name('customerproductadd');
-Route::post('/request_product', [ProductController::class, 'storeProductRequest'])->name('productrequest');
-Route::get('/product_request_list', [ProductController::class, 'viewRequestProductList'])->name('viewrequestproduct');
-Route::get('/check_new_product', [ProductController::class, 'adminCheckNewProductRequest'])->name('checknewproduct');
-Route::get('/mystatus_new_product', [ProductController::class, 'showAddRequestStatus'])->name('addnewproductcust');
-Route::get('/mystatus_new_product/{id}', [ProductController::class, 'CancelNewAddRequestCust'])->name('CustRemovenewproduct');
-Route::post('/check_new_product/{id}/approve', [ProductController::class, 'approveProductRequest'])->name('approveProductRequest');
-Route::get('/check_new_product/{id}/reject', [ProductController::class, 'rejectProductRequest'])->name('rejectProductRequest');
-Route::get('/cancel-reorder-request/{id}', [ProductController::class, 'CancelReorderRequestCust'])->name('cancelReorderRequest');
+// Route::get('/restock_form', [ProductController::class, 'RestockForm'])->name('restockform');
+// Route::get('/restock_form/{id}', [ProductController::class, 'RestockItem'])->name('restock');
+// Route::post('/send_request_restock', [ProductController::class, 'SendRequestProduct'])->name('requestproduct');
+// Route::get('/request_restock_status', [ProductController::class, 'showRestockRequests'])->name('showstatus');
+// Route::get('/review_request', [ProductController::class, 'reviewRestockRequest'])->name('reviewrequest');
+// Route::get('remove_request/{id}', [ProductController::class, 'RemoveRequest']);
+// Route::get('approve_request/{id}', [ProductController::class, 'approveRequest']);
+// Route::get('/customer_add_product', [ProductController::class, 'CustomerAddProductForm'])->name('customerproductadd');
+// Route::post('/request_product', [ProductController::class, 'storeProductRequest'])->name('productrequest');
+// Route::get('/product_request_list', [ProductController::class, 'viewRequestProductList'])->name('viewrequestproduct');
+// Route::get('/check_new_product', [ProductController::class, 'adminCheckNewProductRequest'])->name('checknewproduct');
+// Route::get('/mystatus_new_product', [ProductController::class, 'showAddRequestStatus'])->name('addnewproductcust');
+// Route::get('/mystatus_new_product/{id}', [ProductController::class, 'CancelNewAddRequestCust'])->name('CustRemovenewproduct');
+// Route::post('/check_new_product/{id}/approve', [ProductController::class, 'approveProductRequest'])->name('approveProductRequest');
+// Route::get('/check_new_product/{id}/reject', [ProductController::class, 'rejectProductRequest'])->name('rejectProductRequest');
+// Route::get('/cancel-reorder-request/{id}', [ProductController::class, 'CancelReorderRequestCust'])->name('cancelReorderRequest');
 
 // Delivery
 Route::get('/delivery_form', [DeliveryController::class, 'deliveryFormCust'])->name('deliveryform');
