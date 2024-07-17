@@ -1,44 +1,255 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Response;
-//carbon use for time and date
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
+
+use App\Models\Client;
+use App\Models\Customer;
+use App\Models\Waybill;
 
 class WaybillController extends Controller
 {
-    public function generateWaybill()
+    public function index()
     {
+        $waybills = Waybill::all();
+        return view('backend.Invoice.waybill_list', compact('waybills'));
+    }
+
+    public function create()
+    {
+        return view('backend.invoice.waybill_form');
+    }
+
+    public function searchShipper(Request $request)
+    {
+        $query = $request->get('query');
+
+        // Search in both Clients and Customers tables
+        $shippers = DB::table('clients')
+                    ->select('name', 'address', 'postcode', 'attention', 'tel')
+                    ->where('name', 'like', "$query%")
+                    ->union(DB::table('customers')
+                            ->select('name', 'address', 'postcode', 'attention', 'tel')
+                            ->where('name', 'like', "$query%"))
+                    ->get();
+
+        $html = '';
+        foreach ($shippers as $shipper) {
+            $html .= '<div class="dropdown-item" data-details=\'' . json_encode($shipper) . '\'>' . $shipper->name . '</div>';
+        }
+
+        return response()->json($html);
+    }
+
+    public function searchReceiver(Request $request)
+    {
+        $query = $request->get('query');
+
+        // Search in both Clients and Customers tables
+        $receivers = DB::table('clients')
+                    ->select('name', 'address', 'postcode', 'attention', 'tel')
+                    ->where('name', 'like', "$query%")
+                    ->union(DB::table('customers')
+                            ->select('name', 'address', 'postcode', 'attention', 'tel')
+                            ->where('name', 'like', "$query%"))
+                    ->get();
+
+        $html = '';
+        foreach ($receivers as $receiver) {
+            $html .= '<div class="dropdown-item" data-details=\'' . json_encode($receiver) . '\'>' . $receiver->name . '</div>';
+        }
+
+        return response()->json($html);
+    }
+
+    public function store(Request $request)
+    {
+        // Validation rules
+        $request->validate([
+            'customer_id' => 'required|string',
+            'service_type' => 'required|string',
+            'shipper_details.name' => 'required|string',
+            'shipper_details.address' => 'required|string',
+            'shipper_details.postcode' => 'required|string',
+            'shipper_details.attention' => 'required|string',
+            'shipper_details.tel' => 'required|string',
+            'receiver_details.name' => 'required|string',
+            'receiver_details.address' => 'required|string',
+            'receiver_details.postcode' => 'required|string',
+            'receiver_details.attention' => 'required|string',
+            'receiver_details.tel' => 'required|string',
+        ]);
+
+        // Handle order products data (optional fields)
+        $orderProducts = $request->input('order_products', []);
+
+        // Ensure nullable fields are set to null if not provided
+        $nullableFields = ['content', 'category', 'size', 'total_weight'];
+        foreach ($nullableFields as $field) {
+            if (!isset($orderProducts[$field])) {
+                $orderProducts[$field] = null;
+            }
+        }
+
+        // Generate date
+        $date = Carbon::now()->format('d-m-y');
+        $dateWb = Carbon::now()->format('dmy');
+
+        // Create a new Waybill instance
+        $waybill = new Waybill();
+        $waybill->waybill_no = 'ARKDWB-' . $dateWb . '-' . $request->input('customer_id');
+        $waybill->customer_id = $request->input('customer_id');
+        $waybill->service_type = $request->input('service_type');
+        $waybill->shipper_name = $request->input('shipper_details.name');
+        $waybill->shipper_address = $request->input('shipper_details.address');
+        $waybill->shipper_postcode = $request->input('shipper_details.postcode');
+        $waybill->shipper_attention = $request->input('shipper_details.attention');
+        $waybill->shipper_tel = $request->input('shipper_details.tel');
+        $waybill->receiver_name = $request->input('receiver_details.name');
+        $waybill->receiver_address = $request->input('receiver_details.address');
+        $waybill->receiver_postcode = $request->input('receiver_details.postcode');
+        $waybill->receiver_attention = $request->input('receiver_details.attention');
+        $waybill->receiver_tel = $request->input('receiver_details.tel');
+        $waybill->order_content = $request->input('order_products.content');
+        $waybill->order_category = $request->input('order_products.category');
+        $waybill->order_size = $request->input('order_products.size');
+        $waybill->order_total_weight = $request->input('order_products.total_weight');
+        $waybill->save();
+
+        // Data for PDF
         $data = [
-            'date' => date('m/d/Y'), //Outputs: 23-03-2024
-            'waybill_number' => 'INV-123456',
-            'customer_id' => 'CUST1234',
-            'company_name' => 'Your Company Name',
-            'company_logo' => asset('assets/images/waybill-banner.png'), // Ensure you have a logo image in your public folder
-            'items' => [
-                ['description' => 'Item 1', 'quantity' => 2, 'price' => 50.00],
-                ['description' => 'Item 2', 'quantity' => 1, 'price' => 75.00],
-                // Add more items as needed
+            'customer_id' => $waybill->customer_id,
+            'waybill_no' => $waybill->waybill_no,
+            'date' => $date,
+            'service_type' => $waybill->service_type,
+            'shipper' => [
+                'name' => $waybill->shipper_name,
+                'address' => $waybill->shipper_address,
+                'postcode' => $waybill->shipper_postcode,
+                'attention' => $waybill->shipper_attention,
+                'tel' => $waybill->shipper_tel,
             ],
-            'total' => 175.00,
+            'receiver' => [
+                'name' => $waybill->receiver_name,
+                'address' => $waybill->receiver_address,
+                'postcode' => $waybill->receiver_postcode,
+                'attention' => $waybill->receiver_attention,
+                'tel' => $waybill->receiver_tel,
+            ],
+            'order' => [
+                'content' => $waybill->order_content,
+                'category' => $waybill->order_category,
+                'size' => $waybill->order_size,
+                'total_weight' => $waybill->order_total_weight,
+            ],
         ];
 
-        $pdf = PDF::loadView('backend/invoice/waybill', $data);
-        //return $pdf->download('waybill.pdf');
+        // Generate PDF
+        $pdf = PDF::loadView('backend.invoice.waybill', $data);
 
-        // Return the PDF as a response with appropriate headers
+        // Set filename dynamically based on waybill_no
+        $filename = $waybill->waybill_no . '.pdf';
+        $filepath = public_path('pdfs/' . $filename);
+        $pdf->save($filepath);
+
+        return response()->json([
+            'pdf_url' => url('pdfs/' . $filename),
+            'redirect_url' => route('waybills.index')
+        ]);
+    }
+
+
+
+    public function generatePdf($id)
+    {
+        $waybill = Waybill::findOrFail($id);
+
+        // Generate date
+        $date = Carbon::now()->format('d-m-y');
+
+        // Data for PDF
+        $data = [
+            'customer_id' => $waybill->customer_id,
+            'waybill_no' => $waybill->waybill_no,
+            'date' => $date,
+            'service_type' => $waybill->service_type,
+            'shipper' => [
+                'name' => $waybill->shipper_name,
+                'address' => $waybill->shipper_address,
+                'postcode' => $waybill->shipper_postcode,
+                'attention' => $waybill->shipper_attention,
+                'tel' => $waybill->shipper_tel,
+            ],
+            'receiver' => [
+                'name' => $waybill->receiver_name,
+                'address' => $waybill->receiver_address,
+                'postcode' => $waybill->receiver_postcode,
+                'attention' => $waybill->receiver_attention,
+                'tel' => $waybill->receiver_tel,
+            ],
+            'order' => [
+                'content' => $waybill->order_content,
+                'category' => $waybill->order_category,
+                'size' => $waybill->order_size,
+                'total_weight' => $waybill->order_total_weight,
+            ],
+        ];
+
+        // Generate PDF
+        $pdf = PDF::loadView('backend.invoice.waybill', $data);
+
+        $filename = $waybill->waybill_no . '.pdf';
+
         return new Response(
             $pdf->output(),
             200,
             [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="waybill.pdf"' // Display PDF in browser
+                'Content-Disposition' => 'inline; filename="' . $filename . '"'
             ]
         );
     }
+
+    public function addRemarks(Request $request)
+{
+    $request->validate([
+        'waybill_id' => 'required|exists:waybills,id',
+        'remarks' => 'required|string|max:255',
+    ]);
+
+    $waybill = Waybill::find($request->waybill_id);
+    $waybill->remarks = $request->remarks;
+    $waybill->save();
+
+    return response()->json(['success' => true]);
 }
+
+
+    public function destroy($id)
+    {
+        $waybill = Waybill::findOrFail($id);
+
+    // to delete pdf from public/pdfs directory
+    // Construct the PDF file path using the waybill number
+    $pdfFilePath = public_path('pdfs/' . $waybill->waybill_no . '.pdf');
+
+    // Delete the PDF file if it exists
+    if (file_exists($pdfFilePath)) {
+        unlink($pdfFilePath);
+    }
+
+        $waybill->delete();
+
+        return redirect()->back()->with('success', 'Waybill deleted successfully!');
+    }
+
+}
+

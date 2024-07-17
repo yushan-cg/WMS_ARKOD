@@ -50,7 +50,7 @@ class CartController extends Controller
                 ->join('companies', 'products.company_id', '=', 'companies.id')
                 ->leftjoin('rack_locations', 'products.rack_id', '=', 'rack_locations.id')
                 ->leftjoin('floor_locations', 'products.floor_id', '=', 'floor_locations.id')
-                ->select('products.id', 'companies.company_name', 'rack_locations.location_code', 'floor_locations.location_codes', 'products.product_name', 'products.item_per_carton', 'quantities.remaining_quantity', 'products.product_image', 'products.weight_per_item')
+                ->select('products.id', 'companies.company_name', 'rack_locations.location_code', 'floor_locations.location_codes', 'products.name', 'products.item_per_carton', 'quantities.remaining_quantity', 'products.product_image', 'products.weight_per_item')
                 ->get();
         } else {
             // if not admin, get products owned by the user
@@ -101,7 +101,7 @@ class CartController extends Controller
                 // Add the item to the cart if it doesn't already exist
                 $cart[$id] = [
                     'id' => $id,
-                    'name' => $product->product_name,
+                    'name' => $product->name,
                     'quantity' => $quantity,
                     'rack' => $rack->rack_id,
                     'image' => $product->product_image
@@ -126,7 +126,7 @@ class CartController extends Controller
                 // Add the item to the cart if it doesn't already exist
                 $cart[$id] = [
                     'id' => $id,
-                    'name' => $product->product_name,
+                    'name' => $product->name,
                     'quantity' => $quantity,
                     'floor' => $floor->floor_id,
                     'image' => $product->product_image

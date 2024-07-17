@@ -49,9 +49,14 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
+                                <li><a href="{{ URL::to('/waybill_list') }}"><i class="icon-Commit"><span
+                                            class="path1"></span><span class="path2"></span></i>Waybill
+                                    </a>
+                                </li>
                                 <li><a href="{{ URL::to('/delivery_order_list') }}"><i class="icon-Commit"><span
-                                                class="path1"></span><span class="path2"></span></i>Delivery Order
-                                        List</a></li>
+                                            class="path1"></span><span class="path2"></span></i>Delivery Order List
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="treeview">

@@ -34,8 +34,28 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/waybill', [WaybillController::class, 'generateWaybill'])->name('generate.waybill');
-Route::get('/invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
+//waybill and invoice
+// Route::get('/waybill_list', [WaybillController::class, 'index'])->name('waybill.index');
+// Route::get('/waybill_form', [WaybillController::class, 'create'])->name('waybills.create');
+// Route::post('/waybill_form', [WaybillController::class, 'store'])->name('waybills.store');
+
+
+
+//Waybill Only
+Route::get('/shipper/search', [WaybillController::class, 'searchShipper'])->name('shipper.search');
+Route::get('/receiver/search', [WaybillController::class, 'searchReceiver'])->name('receiver.search');
+Route::get('/waybill_list', [WaybillController::class, 'index'])->name('waybills.index');
+Route::get('/waybills/create', [WaybillController::class, 'create'])->name('waybills.create');
+Route::post('/waybills', [WaybillController::class, 'store'])->name('waybills.store');
+Route::get('/waybills/{id}/pdf', [WaybillController::class, 'generatePdf'])->name('waybills.pdf');
+Route::delete('/waybills/{id}', [WaybillController::class, 'destroy'])->name('waybills.destroy');
+Route::post('/waybills/addRemarks', [WaybillController::class, 'addRemarks'])->name('waybills.addRemarks');
+
+
+
+
+// Route::get('/waybills', [WaybillController::class, 'generateWaybill'])->name('generate.waybill');
+// Route::get('/invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
 
 //Route::get('generate-invoice-pdf', array('as'=> 'generate.invoice.pdf', 'uses' => 'PDFController@generateInvoicePDF'));
 
