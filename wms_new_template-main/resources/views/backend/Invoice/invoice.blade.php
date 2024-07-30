@@ -147,23 +147,23 @@ td:nth-child(4) {
                 <p><a href="mailto:sales@arkod.com.my">sales@arkod.com.my</a></p>
             </div>
             <div class="header-right">
-                <p>Invoice No.: ARKODSI-230524-001EL</p>
-                <p>Date: 23-05-24</p>
-                <p>Customer ID:E.L</p>
-                <p>Payment Method:Online Banking</p>
+                <p>Invoice No.: {{ $invoice_no }}</p>
+                <p>Date: {{ $date }}</p>
+                <p>Customer ID: {{ $customer_id }}</p>
+                <p>Payment Method: {{ $payment_method }}</p>
             </div>
             <div class="clearfix"></div> <!-- Add clearfix here -->
         </header>
 
         <div class="customer-details">
             <div style="padding-top: 18px; padding-bottom: 18px">
-                <p><strong>EXPREXA LOGISTIC</strong></p>
-                <p><strong>Attn: LC Bong</strong></p>
+                <p><strong>{{ $name }}</strong></p>
+                <p><strong>Attn: {{ $attention }}</strong></p>
             </div>
 
             <div>
-                <p>Address: 1st Floor, Lot.11001 & Lot.11003, Section 64, Jalan Noakes, Sungai Apong, 93450 Kuching, Sarawak.</p>
-                <p>Tel. no.: 016 - 859 5796</p>
+                <p>Address: {{ $address }}</p>
+                <p>Tel. no.: {{ $tel }}</p>
             </div>
         </div>
 
@@ -181,8 +181,8 @@ td:nth-child(4) {
                     <tr>
                         <td></td>
                         <td></td>
-                        <td>30days</td>
-                        <td>22-06-24</td>
+                        <td>{{ $payment_terms }}</td>
+                        <td>{{ $due_date }}</td>
                     </tr>
                 <!-- Rows will be generated dynamically using server-side code-->
                 <?php
@@ -213,62 +213,17 @@ td:nth-child(4) {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td>Car shipment from KCH to SGR</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Ocean Frieght</td>
-                    <td>RM 1550.00</td>
-                    <td>RM 1550.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>PORT KLANG delivery to receiver</td>
-                    <td>RM 170.00</td>
-                    <td>RM 170.00</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Model: PERODUA AXIA G Plate No.: QAA 1166 M</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
                 <!-- Rows will be generated dynamically using server-side code-->
                 <?php
-                // Example PHP code to fetch data from the database and create rows
-                /*$rows = fetchDataFromDatabase(); // Replace with your actual data retrieval logic
-
-                foreach ($rows as $row) {
+                // Example dynamic row generation (replace with actual dynamic PHP logic)
+                foreach ($items as $item) {
                     echo "<tr>";
-                    echo "<td>{$row['quantity']}</td>";
-                    echo "<td>{$row['description']}</td>";
-                    echo "<td>{$row['unit_price']}</td>";
-                    echo "<td>{$row['total']}</td>";
+                    echo "<td>{$item['quantity']}</td>";
+                    echo "<td>{$item['description']}</td>";
+                    echo "<td>{$item['unit_price']}</td>";
+                    echo "<td>{$item['total_price']}</td>";
                     echo "</tr>";
-                }*/
+                }
                 ?>
                 </tbody>
         </table>
@@ -283,15 +238,15 @@ td:nth-child(4) {
                         <img src="{{ asset('assets/images/payment-banner.png') }}" alt="ARKOD" class="img-fluid logo">
                     </td>
                     <th style="width: 115px;">Subtotal</th>
-                    <td style="width: 92px;">RM 1720.00</td>
+                    <td style="width: 92px;">RM {{ $subtotal }}</td>
                 </tr>
                 <tr>
-                    <th>SST@ 0.00%</th>
-                    <td style="width: 92px;">RM 0.00</td>
+                    <th>SST@ {{ $sstPercentage }}%</th>
+                    <td style="width: 92px;">RM {{ $sst }}</td>
                 </tr>
                 <tr>
                     <th><strong>TOTAL</strong></th>
-                    <td style="width: 92px;">RM 1720.00</td>
+                    <td style="width: 92px;">RM {{ $final_price }}</td>
                 </tr>
             </tbody>
         </table>

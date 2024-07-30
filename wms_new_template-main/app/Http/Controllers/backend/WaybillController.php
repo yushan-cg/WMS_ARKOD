@@ -99,12 +99,14 @@ class WaybillController extends Controller
             }
         }
 
-        // Generate date
-        $date = Carbon::now()->format('d-m-y');
-        $dateWb = Carbon::now()->format('dmy');
+        $dateNow = Carbon::now();  // Current date and time
+        $dateWb = $dateNow->format('dmy');
+        // Format current date for database storage
+        $formattedDate = $dateNow->format('Y-m-d');
 
         // Create a new Waybill instance
         $waybill = new Waybill();
+        $waybill->date = $formattedDate;
         $waybill->waybill_no = 'ARKDWB-' . $dateWb . '-' . $request->input('customer_id');
         $waybill->customer_id = $request->input('customer_id');
         $waybill->service_type = $request->input('service_type');
@@ -128,7 +130,7 @@ class WaybillController extends Controller
         $data = [
             'customer_id' => $waybill->customer_id,
             'waybill_no' => $waybill->waybill_no,
-            'date' => $date,
+            'date' => Carbon::parse($waybill->date)->format('d-m-y'),
             'service_type' => $waybill->service_type,
             'shipper' => [
                 'name' => $waybill->shipper_name,
@@ -172,14 +174,11 @@ class WaybillController extends Controller
     {
         $waybill = Waybill::findOrFail($id);
 
-        // Generate date
-        $date = Carbon::now()->format('d-m-y');
-
         // Data for PDF
         $data = [
             'customer_id' => $waybill->customer_id,
             'waybill_no' => $waybill->waybill_no,
-            'date' => $date,
+            'date' => Carbon::parse($waybill->date)->format('d-m-y'),
             'service_type' => $waybill->service_type,
             'shipper' => [
                 'name' => $waybill->shipper_name,

@@ -51,11 +51,20 @@ Route::get('/waybills/{id}/pdf', [WaybillController::class, 'generatePdf'])->nam
 Route::delete('/waybills/{id}', [WaybillController::class, 'destroy'])->name('waybills.destroy');
 Route::post('/waybills/addRemarks', [WaybillController::class, 'addRemarks'])->name('waybills.addRemarks');
 
+//Invoice only
+Route::get('/customer/search', [InvoiceController::class, 'searchCustomer'])->name('customer.search');
+Route::get('/invoice_list', [InvoiceController::class, 'index'])->name('invoices.index');
+Route::get('/invoices/create', [InvoiceController::class, 'create'])->name('invoices.create');
+Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
+Route::get('/invoices/{id}/pdf', [InvoiceController::class, 'generatePdf'])->name('invoices.pdf');
+Route::post('/invoices/addRemarks', [InvoiceController::class, 'addRemarks'])->name('invoices.addRemarks');
+Route::delete('/invoices/{id}', [InvoiceController::class, 'destroy'])->name('invoices.destroy');
+
+//Route::get('/invoices/{id}', [InvoiceController::class, 'show'])->name('invoices.show');
 
 
 
-// Route::get('/waybills', [WaybillController::class, 'generateWaybill'])->name('generate.waybill');
-// Route::get('/invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
+//Route::get('/invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
 
 //Route::get('generate-invoice-pdf', array('as'=> 'generate.invoice.pdf', 'uses' => 'PDFController@generateInvoicePDF'));
 

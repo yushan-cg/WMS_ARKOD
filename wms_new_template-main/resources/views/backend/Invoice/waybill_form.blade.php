@@ -32,7 +32,7 @@
             <div class="col-12">
                 <div class="box">
                     <div class="box-header with-border">
-
+                        <h3 class="box-title">Waybill Form</h3>
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
@@ -119,7 +119,8 @@
                                     <label for="order_total_weight">Total Weight:</label>
                                     <input type="text" class="form-control" name="order_products[total_weight]" id="order_total_weight">
                                 </div>
-
+                                <!-- Back Button -->
+                                <a href="{{ route('waybills.index') }}" class="btn btn-secondary">Back</a>
                                 <button type="submit" id="generateWaybillButton" class="btn btn-primary">Generate Waybill</button>
                                 <button id="loadingButton" class="btn btn-primary" type="button" style="display:none; background-color: #007bff; border-color: #007bff; color: #fff;" disabled>
                                     <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>

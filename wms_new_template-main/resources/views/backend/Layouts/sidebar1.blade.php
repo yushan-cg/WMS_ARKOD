@@ -53,6 +53,10 @@
                                             class="path1"></span><span class="path2"></span></i>Waybill
                                     </a>
                                 </li>
+                                <li><a href="{{ URL::to('/invoice_list') }}"><i class="icon-Commit"><span
+                                    class="path1"></span><span class="path2"></span></i>Invoice
+                                    </a>
+                                </li>
                                 <li><a href="{{ URL::to('/delivery_order_list') }}"><i class="icon-Commit"><span
                                             class="path1"></span><span class="path2"></span></i>Delivery Order List
                                     </a>
