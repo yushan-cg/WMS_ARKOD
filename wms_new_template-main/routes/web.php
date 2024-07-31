@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\Company;
 use App\Http\Controllers\backend\UsermanagementController;
 use App\Http\Controllers\backend\ProductController;
 use App\Http\Controllers\backend\DeliveryController;
@@ -12,8 +11,6 @@ use App\Http\Controllers\backend\QuantityController;
 use App\Http\Controllers\backend\PickerController;
 use App\Http\Controllers\backend\CartController;
 use App\Http\Controllers\backend\CompanyController;
-use App\Http\Controllers\backend\RackController;
-use App\Http\Controllers\backend\FloorController;
 use App\Http\Controllers\backend\OrderController;
 use App\Http\Controllers\backend\InvoiceController;
 use App\Http\Controllers\SidebarController;
@@ -34,13 +31,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//waybill and invoice
-// Route::get('/waybill_list', [WaybillController::class, 'index'])->name('waybill.index');
-// Route::get('/waybill_form', [WaybillController::class, 'create'])->name('waybills.create');
-// Route::post('/waybill_form', [WaybillController::class, 'store'])->name('waybills.store');
-
-
-
 //Waybill Only
 Route::get('/shipper/search', [WaybillController::class, 'searchShipper'])->name('shipper.search');
 Route::get('/receiver/search', [WaybillController::class, 'searchReceiver'])->name('receiver.search');
@@ -59,17 +49,6 @@ Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.st
 Route::get('/invoices/{id}/pdf', [InvoiceController::class, 'generatePdf'])->name('invoices.pdf');
 Route::post('/invoices/addRemarks', [InvoiceController::class, 'addRemarks'])->name('invoices.addRemarks');
 Route::delete('/invoices/{id}', [InvoiceController::class, 'destroy'])->name('invoices.destroy');
-
-//Route::get('/invoices/{id}', [InvoiceController::class, 'show'])->name('invoices.show');
-
-
-
-//Route::get('/invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
-
-//Route::get('generate-invoice-pdf', array('as'=> 'generate.invoice.pdf', 'uses' => 'PDFController@generateInvoicePDF'));
-
-//homepage ni redundent boleh delete
-//Route::get('/homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
 
 //Floors Me
 Route::get('/floor-overview', function () {
@@ -120,7 +99,7 @@ Route::get('/edit_user/{id}', [UsermanagementController::class, 'UserEdit']);
 Route::post('/update_user/{id}', [UsermanagementController::class, 'UserUpdate']);
 Route::get('/delete_user/{id}', [UsermanagementController::class, 'UserDelete']);
 
-// Admin side product management
+// Product management
 Route::prefix('product')->group(function () {
     Route::get('/list', [ProductController::class, 'listProduct'])->name('product.index');
     Route::post('/insert', [ProductController::class, 'insertProduct'])->name('insert_product');
@@ -128,32 +107,8 @@ Route::prefix('product')->group(function () {
     Route::delete('/delete/{id}', [ProductController::class, 'deleteProduct'])->name('delete_product');
 });
 
-// Route::get('list_product', [ProductController::class, 'ProductList'])->name('product.index');
-// Route::get('/add_product', [ProductController::class, 'ProductAdd'])->name('productadd');
-// Route::post('/insert_product', [ProductController::class, 'ProductInsert']);
-// // Route::get('/edit_product/{id}', [ProductController::class, 'ProductEdit']);
-// Route::post('/update_product/{id}', [ProductController::class, 'ProductUpdate']);
-// Route::get('/delete_product/{id}', [ProductController::class, 'ProductDelete']);
-// Route::get('/qr_product',[ProductController::class, 'ProductQR']);
-// Route::get('/getProductQRInfo/{productCode}',[ProductController::class, 'getProductQRInfo']);
+// Location management
 
-// Customer side product restock
-// Route::get('/restock_form', [ProductController::class, 'RestockForm'])->name('restockform');
-// Route::get('/restock_form/{id}', [ProductController::class, 'RestockItem'])->name('restock');
-// Route::post('/send_request_restock', [ProductController::class, 'SendRequestProduct'])->name('requestproduct');
-// Route::get('/request_restock_status', [ProductController::class, 'showRestockRequests'])->name('showstatus');
-// Route::get('/review_request', [ProductController::class, 'reviewRestockRequest'])->name('reviewrequest');
-// Route::get('remove_request/{id}', [ProductController::class, 'RemoveRequest']);
-// Route::get('approve_request/{id}', [ProductController::class, 'approveRequest']);
-// Route::get('/customer_add_product', [ProductController::class, 'CustomerAddProductForm'])->name('customerproductadd');
-// Route::post('/request_product', [ProductController::class, 'storeProductRequest'])->name('productrequest');
-// Route::get('/product_request_list', [ProductController::class, 'viewRequestProductList'])->name('viewrequestproduct');
-// Route::get('/check_new_product', [ProductController::class, 'adminCheckNewProductRequest'])->name('checknewproduct');
-// Route::get('/mystatus_new_product', [ProductController::class, 'showAddRequestStatus'])->name('addnewproductcust');
-// Route::get('/mystatus_new_product/{id}', [ProductController::class, 'CancelNewAddRequestCust'])->name('CustRemovenewproduct');
-// Route::post('/check_new_product/{id}/approve', [ProductController::class, 'approveProductRequest'])->name('approveProductRequest');
-// Route::get('/check_new_product/{id}/reject', [ProductController::class, 'rejectProductRequest'])->name('rejectProductRequest');
-// Route::get('/cancel-reorder-request/{id}', [ProductController::class, 'CancelReorderRequestCust'])->name('cancelReorderRequest');
 
 // Delivery
 Route::get('/delivery_form', [DeliveryController::class, 'deliveryFormCust'])->name('deliveryform');
@@ -209,18 +164,6 @@ Route::post('/cart/remove/{id}', [CartController::class, 'cartRemove'])->name('c
 Route::post('/assign', [CartController::class, 'assign'])->name('assign.index');
 Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart_clear', [CartController::class, 'clear'])->name('cart.clear');
-
-// Rack
-Route::get('/racks', [RackController::class, 'RackList'])->name('Rack.list');
-Route::get('rack/{rackId}/products', 'RackController@getProductsByRackId');
-Route::get('/qr_racks',[RackController::class, 'RackQR']);
-Route::get('/getRackQRInfo/{locationCode}',[RackController::class, 'getRackQRInfo']);
-
-// Floor
-Route::get('/floors', [FloorController::class, 'FloorList'])->name('Floor.list');
-Route::get('floors/{floorId}/products', 'FloorController@getProductsByFloorId');
-Route::get('/qr_floors',[FloorController::class, 'FloorQR']);
-Route::get('/getFloorQRInfo/{locationCode}',[FloorController::class, 'getFloorQRInfo']);
 
 // Orders
 Route::get('/orders/{companyId}', [OrderController::class, 'orderList'])->name('orderList');
