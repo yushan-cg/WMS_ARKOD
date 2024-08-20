@@ -23,13 +23,28 @@ use App\Http\Controllers\PickupController;
 use App\Http\Controllers\backend\WaybillController;
 use App\Http\Controllers\backend\ClientController;
 use App\Http\Controllers\backend\CustomerController;
-
+use App\Http\Controllers\backend\NotificationController;
+use App\Http\Controllers\Controller;
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
 Auth::routes();
+
+
+//notifications
+Route::middleware('auth')->group(function () {
+    // Route to get the notifications
+    Route::get('/notifications', [Controller::class, 'getNotifications'])->name('notifications.index');
+
+    // Route to mark a notification as read
+    Route::delete('/notifications/clear', [Controller::class, 'clearNotifications'])->name('notifications.clear');
+    Route::post('/notifications/mark-all-as-read', [Controller::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+    Route::get('/notifications/mark-as-read/{id}', [Controller::class, 'markAsRead'])->name('notifications.markAsRead');
+
+});
+
 
 //Waybill Only
 Route::get('/shipper/search', [WaybillController::class, 'searchShipper'])->name('shipper.search');
@@ -105,6 +120,10 @@ Route::prefix('product')->group(function () {
     Route::post('/insert', [ProductController::class, 'insertProduct'])->name('insert_product');
     Route::patch('/update/{id}', [ProductController::class, 'updateProduct'])->name('update_product');
     Route::delete('/delete/{id}', [ProductController::class, 'deleteProduct'])->name('delete_product');
+    Route::patch('/approve/{id}', [ProductController::class, 'approveProduct'])->name('approve_product');
+    Route::patch('/reject/{id}', [ProductController::class, 'rejectProduct'])->name('reject_product');
+
+
 });
 
 // Location management

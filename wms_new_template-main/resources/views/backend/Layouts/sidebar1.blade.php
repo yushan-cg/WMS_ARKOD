@@ -171,9 +171,9 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ URL::to('/customer_add_product') }}"><i class="icon-Commit"><span
+                                <li><a href="{{ URL::to('/product/list') }}"><i class="icon-Commit"><span
                                                 class="path1"></span><span class="path2"></span></i>Add New
-                                        Product</a></li>
+                                        Product with product list</a></li>
                                 <li><a href="{{ URL::to('/mystatus_new_product') }}"><i class="icon-Commit"><span
                                                 class="path1"></span><span class="path2"></span></i>Status of
                                         Approval</a></li>

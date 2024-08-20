@@ -41,7 +41,90 @@
         </div>
     </div>
 
-	<!-- Main content -->
+    {{-- waithing for approval table --}}
+    <section class="content">
+		<div class="row">
+			<div class="col-12">
+			<div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Product : Waiting For Approval</h3>
+                </div>
+
+				<div class="box-body">
+				<div class="table-responsive">
+					<table id="productApproval" class="table table-hover no-wrap product-order" data-page-size="5">
+						<thead>
+							<tr>
+							<th>ID</th>
+                            @if (Auth::user()->role == 1)
+							<th>Clients</th>
+							@endif
+							<th>SKU</th>
+							<th>Product Name</th>
+							<th>Description</th>
+                            <th>UOM</th>
+							<th>Weight Per Unit</th>
+							<th>Expired Date</th>
+							<th>Product Image</th>
+							<th>Status</th>
+							<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+						@foreach ($list as $index => $row)
+                            @if ($row->status == 'Rejected' || $row->status == 'Pending')
+                                <tr class="fixed-row fixed-col">
+                                    {{-- <td>{{ $loop->iteration }}</td> --}}
+                                    <td>{{ $row->id }}</td>
+                                    @if (Auth::user()->role == 1)
+                                        <td>{{ $row->client_name }}</td>
+                                    @endif
+                                    <td>{{ $row->SKU }}</td>
+                                    <td>{{ $row->product_name }}</td>
+                                    <td>{{ $row->product_desc }}</td>
+                                    <td>{{ $row->UOM }}</td>
+                                    <td>{{ $row->weight_per_unit }}</td>
+                                    <td>{{ $row->expired_date }}</td>
+                                    <td>
+                                        <img src="{{ asset('product_img/' . $row->Img) }}" alt="{{ $row->product_name }}" width="50" height="50">
+                                    </td>
+                                    <td>{{ $row->status }}</td>
+
+                                        <td>
+                                            @if (Auth::user()->role == 1)
+                                            <form action="{{ route('approve_product', $row->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-success">Approve</button>
+                                            </form>
+                                            <form action="{{ route('reject_product', $row->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-danger">Reject</button>
+                                            </form>
+                                            @endif
+                                            <!-- end modal -->
+                                            <button type="button" class="text-danger sa-params" style="border: none; background: none;" data-bs-toggle="tooltip" data-bs-original-title="Delete" alt="alert" onclick="confirmDelete('{{ $row->id }}')">
+                                                <i class="ti-trash" alt="alert"></i>
+                                            </button>
+                                                <form id="delete-product-form-{{ $row->id }}" action="{{ route('delete_product', $row->id) }}" method="POST" style="display: none;">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </td>
+                                </tr>
+                            @endif
+						@endforeach
+						</tbody>
+					</table>
+				</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+
+    <!-- Main content -->
 	<section class="content">
 		<div class="row">
 			<div class="col-12">
@@ -66,10 +149,14 @@
 						<thead>
 							<tr>
 							<th>ID</th>
-							<th>Customer/Company</th>
+                            @if (Auth::user()->role == 1)
+							<th>Clients</th>
+							@endif
 							<th>SKU</th>
 							<th>Product Name</th>
 							<th>Description</th>
+                            <th>UOM</th>
+							<th>Weight Per Unit</th>
 							<th>Expired Date</th>
 							<th>Product Image</th>
 							@if (Auth::user()->role == 1)
@@ -79,49 +166,55 @@
 						</thead>
 						<tbody>
 						@foreach ($list as $index => $row)
-							<tr class="fixed-row fixed-col">
-								{{-- <td>{{ $loop->iteration }}</td> --}}
-								<td>{{ $row->id }}</td>
-								<td>{{ $row->partner_name }}</td>
-								<td>{{ $row->SKU }}</td>
-								<td>{{ $row->product_name }}</td>
-								<td>{{ $row->product_desc }}</td>
-								<td>{{ $row->expired_date }}</td>
-								<td>
-									<img src="{{ $row->Img }}" alt="{{ $row->product_name }}" width="50" height="50">
-								</td>
-								@if (Auth::user()->role == 1)
-									<td>
-										<!-- Add any action buttons or links here -->
-										<button type="button" class="btn btn-primary" style="width: 100px;" data-bs-toggle="modal" data-bs-target="#editProductModal{{ $row->id }}">
-											Edit
-										</button>
-										<!-- Modal for editing product -->
-										<x-modal-form
-											modalId="editProductModal{{ $row->id }}"
-											modalTitle="Edit Product"
-											formId="editProductForm{{ $row->id }}"
-											formAction="{{ route('update_product', $row->id) }}"
-											submitButton="Save edit">
-											<form id="editProductForm{{ $row->id }}" action="{{ route('update_product', $row->id) }}" method="POST" enctype="multipart/form-data">
-												@csrf
-												@method('PATCH')
-												<!-- Form fields -->
-												<div class="modal-body">
-													@include('backend.product.edit_product', ['product' => $row])
-												</div>
-										</x-modal-form>
-										<!-- end modal -->
-										<button type="button" class="btn btn-danger" style="width: 75px;" onclick="confirmDelete({{ $row->id }});">
-											Delete
-										</button>
-										<form id="delete-product-form-{{ $row->id }}" action="{{ route('delete_product', $row->id) }}" method="POST" style="display: none;">
-											@csrf
-											@method('DELETE')
-										</form>
-									</td>
-								@endif
-							</tr>
+                            @if ($row->status == 'Approved')
+                                <tr class="fixed-row fixed-col">
+                                    {{-- <td>{{ $loop->iteration }}</td> --}}
+                                    <td>{{ $row->id }}</td>
+                                    @if (Auth::user()->role == 1)
+                                        <td>{{ $row->client_name }}</td>
+                                    @endif
+                                    <td>{{ $row->SKU }}</td>
+                                    <td>{{ $row->product_name }}</td>
+                                    <td>{{ $row->product_desc }}</td>
+                                    <td>{{ $row->UOM }}</td>
+                                    <td>{{ $row->weight_per_unit }}</td>
+                                    <td>{{ $row->expired_date }}</td>
+                                    <td>
+                                        <img src="{{ asset('product_img/' . $row->Img) }}" alt="{{ $row->product_name }}" width="50" height="50">
+                                    </td>
+                                    @if (Auth::user()->role == 1)
+                                        <td>
+                                            <!-- Add any action buttons or links here -->
+                                            <button class="text-info me-2" style="border: none; background: none;" data-bs-toggle="modal" data-bs-original-title="Edit Product" alt="alert" data-bs-target="#editProductModal{{ $row->id }}">
+                                                <i class="ti-pencil-alt" alt="alert"></i>
+                                            </button>
+                                            <!-- Modal for editing product -->
+                                            <x-modal-form
+                                                modalId="editProductModal{{ $row->id }}"
+                                                modalTitle="Edit Product"
+                                                formId="editProductForm{{ $row->id }}"
+                                                formAction="{{ route('update_product', $row->id) }}"
+                                                submitButton="Save edit">
+                                                <form id="editProductForm{{ $row->id }}" action="{{ route('update_product', $row->id) }}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <!-- Form fields -->
+                                                    <div class="modal-body">
+                                                        @include('backend.product.edit_product', ['product' => $row])
+                                                    </div>
+                                            </x-modal-form>
+                                            <!-- end modal -->
+                                            <button type="button" class="text-danger sa-params" style="border: none; background: none;" data-bs-toggle="tooltip" data-bs-original-title="Delete" alt="alert" onclick="confirmDelete('{{ $row->id }}')">
+                                                <i class="ti-trash" alt="alert"></i>
+                                            </button>
+                                            <form id="delete-product-form-{{ $row->id }}" action="{{ route('delete_product', $row->id) }}" method="POST" style="display: none;">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </td>
+                                    @endif
+                                </tr>
+                            @endif
 						@endforeach
 						</tbody>
 					</table>
@@ -155,5 +248,22 @@
 				document.getElementById('delete-product-form-' + id).submit();
 			}
 		}
+
+        $(document).ready(function() {
+            $('#productApproval').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false,
+                'pageLength': 5,
+                'lengthMenu': [            // Customize the options in the dropdown
+                    [5, 10, 25, 50],       // Values for the number of entries
+                    [5, 10, 25, 50]        // Labels to show in the dropdown
+                ]
+            });
+        });
+
 	</script>
 @endsection

@@ -9,6 +9,7 @@
                 <th>Customer Name</th>
                 <th>Email</th>
                 <th>Address</th>
+                <th>Postcode</th>
                 <th>Attention</th>
                 <th>Tel</th>
                 <th>Actions</th>
@@ -22,6 +23,7 @@
                         <td>{{ $customer['name'] }}</td>
                         <td>{{ $customer['email'] }}</td>
                         <td>{{ $customer['address'] }}</td>
+                        <td>{{ $customer['postcode'] }}</td>
                         <td>{{ $customer['attention'] }}</td>
                         <td>{{ $customer['tel'] }}</td>
                         <td>

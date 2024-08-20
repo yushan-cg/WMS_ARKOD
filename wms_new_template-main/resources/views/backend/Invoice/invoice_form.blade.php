@@ -42,6 +42,10 @@
                         <form id="invoiceForm" action="{{ route('invoices.store') }}"  method="POST">
                             @csrf
                             <div class="form-group">
+                                <label for="no">No : </label>
+                                <input type="text" name="no" class="form-control" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="customer_id">Customer ID</label>
                                 <input type="text" name="customer_id" class="form-control" required>
                             </div>
@@ -65,7 +69,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="attention">Attention</label>
-                                <input type="text" class="form-control" name="attention" id="attention" required>
+                                <input type="text" class="form-control" name="attention" id="attention">
                             </div>
                             <div class="form-group">
                                 <label for="address">Full Address</label>
@@ -84,8 +88,8 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" name="payment_terms" class="form-control" required></td>
-                                        <td><input type="date" name="due_date" class="form-control" required></td>
+                                        <td><input type="text" name="payment_terms" class="form-control"></td>
+                                        <td><input type="date" name="due_date" class="form-control" value=""></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -102,11 +106,6 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        {{-- <td><input type="number" name="quantity[]" class="form-control" oninput="calculateRow(this)"></td>
-                                        <td><input type="text" name="description[]" class="form-control"></td>
-                                        <td><input type="number" step="0.01" name="unit_price[]" class="form-control" oninput="calculateRow(this)"></td>
-                                        <td><input type="number" step="0.01" name="total_price[]" class="form-control" readonly></td>
-                                        <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button></td> --}}
                                         <td><input type="number" name="items[0][quantity]" class="form-control" oninput="calculateRow(this)"></td>
                                         <td><input type="text" name="items[0][description]" class="form-control"></td>
                                         <td><input type="number" step="0.01" name="items[0][unit_price]" class="form-control" oninput="calculateRow(this)"></td>

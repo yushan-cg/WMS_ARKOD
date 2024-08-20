@@ -214,7 +214,7 @@
                         </table>
                     </td>
                     <td class="qr-code" rowspan="1">
-                        <img src="{{ asset('assets/images/qr-sample.png') }}" alt="QR Code">
+                        <img src="{{ asset('assets/images/qr-track.png') }}" alt="QR Code">
                     </td>
                 </tr>
             </tbody>
@@ -231,7 +231,7 @@
                 <img src="{{ asset('assets/images/waybill-remark.png') }}" alt="Remark" class="img-fluid logo">
             </div>
             <p>Thank You for Your Support!</p>
-            <p>Reach out to us at <a href="mailto:sales@arkod.com.my">sales@arkod.com.my</a> or call +6080-9116168 if you need additional assistance.</p>
+            <p>Reach out to us at <a href="mailto:sales@arkod.com.my">sales@arkod.com.my</a> or call +6018-9116168 if you need additional assistance.</p>
         </div>
     </div>
 </body>

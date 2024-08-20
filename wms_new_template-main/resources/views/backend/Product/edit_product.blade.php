@@ -24,11 +24,11 @@
     <input type="number" class="form-control" id="weight_per_unit{{ $row->id }}" name="weight_per_unit" placeholder="Enter product weight per unit in kg" value="{{ $row->weight_per_unit }}">
 </div>
 <div class="form-group">
-    <label for="partner_id{{ $row->id }}">Customer/Company of the product</label>
-    <select class="form-control" id="partner_id{{ $row->id }}" name="partner_id" required>
+    <label for="client_id{{ $row->id }}">Customer/Company of the product</label>
+    <select class="form-control" id="client_id{{ $row->id }}" name="client_id" disabled>
         <option value="">Select Customer/Company</option>
-        @foreach($partners as $partner)
-            <option value="{{ $partner->id }}" {{ $partner->id == $row->partner_id ? 'selected' : '' }}>{{ $partner->name }}</option>
+        @foreach($clients as $client)
+            <option value="{{ $client->id }}" {{ $client->id == $row->client_id ? 'selected' : '' }}>{{ $client->name }}</option>
         @endforeach
     </select>
 </div>

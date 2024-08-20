@@ -47,6 +47,7 @@
                                     <th>Customer Name</th>
                                     <th>Email</th>
                                     <th>Address</th>
+                                    <th>Postcode</th>
                                     <th>Attention</th>
                                     <th>Tel</th>
                                     <th>Actions</th>
@@ -58,6 +59,7 @@
                                         <td>{{ $customer->name }}</td>
                                         <td>{{ $customer->email }}</td>
                                         <td>{{ $customer->address }}</td>
+                                        <td>{{ $customer->postcode }}</td>
                                         <td>{{ $customer->attention }}</td>
                                         <td>{{ $customer->tel }}</td>
                                         <td>
@@ -99,6 +101,10 @@
                                                         <div class="form-group">
                                                             <label for="address{{ $customer->id }}">Customer Address</label>
                                                             <input type="text" name="address" class="form-control" id="address{{ $customer->id }}" value="{{ $customer->address }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="postcode{{ $customer->id }}">Customer Postcode</label>
+                                                            <input type="text" name="address" class="form-control" id="postcode{{ $customer->id }}" value="{{ $customer->postcode }}">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="attention{{ $customer->id }}">Attention</label>
@@ -150,8 +156,12 @@
                             <input type="text" name="address" class="form-control" id="addressCustomer" placeholder="Enter customer address" required>
                         </div>
                         <div class="form-group">
+                            <label for="postcodeCustomer">Customer Postcode</label>
+                            <input type="text" name="postcode" class="form-control" id="postcodeCustomer" placeholder="Enter customer postcode" required>
+                        </div>
+                        <div class="form-group">
                             <label for="attentionCustomer">Attention</label>
-                            <input type="text" name="attention" class="form-control" id="attentionCustomer" placeholder="Enter attention" required>
+                            <input type="text" name="attention" class="form-control" id="attentionCustomer" placeholder="Enter attention">
                         </div>
                         <div class="form-group">
                             <label for="telCustomer">Telephone</label>
