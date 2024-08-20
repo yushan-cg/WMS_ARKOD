@@ -32,7 +32,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-<<<<<<< HEAD
+
 //notifications
 Route::middleware('auth')->group(function () {
     // Route to get the notifications
