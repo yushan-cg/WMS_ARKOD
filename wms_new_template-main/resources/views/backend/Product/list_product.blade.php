@@ -66,7 +66,7 @@
 						<thead>
 							<tr>
 							<th>ID</th>
-							<th>Customer/Company</th>
+							<th>Clients</th>
 							<th>SKU</th>
 							<th>Product Name</th>
 							<th>Description</th>
@@ -82,20 +82,20 @@
 							<tr class="fixed-row fixed-col">
 								{{-- <td>{{ $loop->iteration }}</td> --}}
 								<td>{{ $row->id }}</td>
-								<td>{{ $row->partner_name }}</td>
+								<td>{{ $row->client_name }}</td>
 								<td>{{ $row->SKU }}</td>
 								<td>{{ $row->product_name }}</td>
 								<td>{{ $row->product_desc }}</td>
 								<td>{{ $row->expired_date }}</td>
 								<td>
-									<img src="{{ $row->Img }}" alt="{{ $row->product_name }}" width="50" height="50">
+                                    <img src="{{ asset($row->Img) }}" alt="{{ $row->product_name }}" width="50" height="50">
 								</td>
 								@if (Auth::user()->role == 1)
 									<td>
 										<!-- Add any action buttons or links here -->
-										<button type="button" class="btn btn-primary" style="width: 100px;" data-bs-toggle="modal" data-bs-target="#editProductModal{{ $row->id }}">
-											Edit
-										</button>
+                                        <button class="text-info me-2" style="border: none; background: none;" data-bs-toggle="modal" data-bs-original-title="Edit Product" alt="alert" data-bs-target="#editProductModal{{ $row->id }}">
+                                            <i class="ti-pencil-alt" alt="alert"></i>
+                                        </button>
 										<!-- Modal for editing product -->
 										<x-modal-form
 											modalId="editProductModal{{ $row->id }}"
@@ -112,9 +112,9 @@
 												</div>
 										</x-modal-form>
 										<!-- end modal -->
-										<button type="button" class="btn btn-danger" style="width: 75px;" onclick="confirmDelete({{ $row->id }});">
-											Delete
-										</button>
+                                        <button type="button" class="text-danger sa-params" style="border: none; background: none;" data-bs-toggle="tooltip" data-bs-original-title="Delete" alt="alert" onclick="confirmDelete('{{ $row->id }}')">
+                                            <i class="ti-trash" alt="alert"></i>
+                                        </button>
 										<form id="delete-product-form-{{ $row->id }}" action="{{ route('delete_product', $row->id) }}" method="POST" style="display: none;">
 											@csrf
 											@method('DELETE')

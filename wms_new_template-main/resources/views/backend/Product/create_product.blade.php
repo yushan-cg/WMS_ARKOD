@@ -27,10 +27,10 @@
             <input type="number" class="form-control" id="weight_per_unit" name="weight_per_unit" value="{{ old('weight_per_unit') }}">
         </div>
         <div class="form-group">
-            <label for="partner_id">Partner:</label>
-            <select class="form-control" id="partner_id" name="partner_id" required>
-                @foreach($partners as $partner)
-                    <option value="{{ $partner->id }}">{{ $partner->name }}</option>
+            <label for="client_id">Client:</label>
+            <select class="form-control" id="client_id" name="client_id" required>
+                @foreach($clients as $client)
+                    <option value="{{ $client->id }}">{{ $client->name }}</option>
                 @endforeach
             </select>
         </div>
