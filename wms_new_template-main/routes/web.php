@@ -45,8 +45,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
-=======
->>>>>>> b209d2b14b1b9082b9f63c4508b2e948c2b6c98c
+
 //Waybill Only
 Route::get('/shipper/search', [WaybillController::class, 'searchShipper'])->name('shipper.search');
 Route::get('/receiver/search', [WaybillController::class, 'searchReceiver'])->name('receiver.search');
