@@ -22,26 +22,12 @@ class Product extends Model
         return $this->belongsTo(Partner::class);
     }
 
-    // public function users()
-    // {
-    //     return $this->belongsToMany(User::class);
-    // }
-
-    // public function rack()
-    // {
-    //     return $this->belongsTo(Rack::class);
-    // }
-
-    // public function floor()
-    // {
-    //     return $this->belongsTo(Floor::class);
-    // }
-
-    // public function company()
-    // {
-    //     return $this->belongsTo(Company::class);
-    // }
-
+    public function locations()
+    {
+        return $this->belongsToMany(Location::class, 'product_location')
+                    ->withPivot('quantity')
+                    ->withTimestamps();
+    }
     // public function productreport()
     // {
     //     return $this->belongsTo(ProductReport::class);
