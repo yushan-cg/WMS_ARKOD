@@ -49,6 +49,7 @@ class CustomerController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|email',
                 'address' => 'required|string',
+                'postcode' => 'required|string',
                 'attention' => 'required|string',
                 'tel' => 'required|string',
                 'client_id' => 'required|exists:clients,id'
@@ -72,6 +73,7 @@ class CustomerController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|email',
                 'address' => 'required|string',
+                'postcode' => 'required|string',
                 'attention' => 'required|string',
                 'tel' => 'required|string',
             ]);
@@ -102,6 +104,7 @@ class CustomerController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'address' => 'required|string',
+            'postcode' => 'required|string',
             'attention' => 'required|string',
             'tel' => 'required|string'
         ]);

@@ -26,7 +26,8 @@ use App\Http\Controllers\PickupController;
 use App\Http\Controllers\backend\WaybillController;
 use App\Http\Controllers\backend\ClientController;
 use App\Http\Controllers\backend\CustomerController;
-
+use App\Http\Controllers\backend\NotificationController;
+use App\Http\Controllers\Controller;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -34,12 +35,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//waybill and invoice
-// Route::get('/waybill_list', [WaybillController::class, 'index'])->name('waybill.index');
-// Route::get('/waybill_form', [WaybillController::class, 'create'])->name('waybills.create');
-// Route::post('/waybill_form', [WaybillController::class, 'store'])->name('waybills.store');
+//notifications
+Route::middleware('auth')->group(function () {
+    // Route to get the notifications
+    Route::get('/notifications', [Controller::class, 'getNotifications'])->name('notifications.index');
 
+    // Route to mark a notification as read
+    Route::delete('/notifications/clear', [Controller::class, 'clearNotifications'])->name('notifications.clear');
+    Route::post('/notifications/mark-all-as-read', [Controller::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+    Route::get('/notifications/mark-as-read/{id}', [Controller::class, 'markAsRead'])->name('notifications.markAsRead');
 
+});
 
 //Waybill Only
 Route::get('/shipper/search', [WaybillController::class, 'searchShipper'])->name('shipper.search');
@@ -59,17 +65,6 @@ Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.st
 Route::get('/invoices/{id}/pdf', [InvoiceController::class, 'generatePdf'])->name('invoices.pdf');
 Route::post('/invoices/addRemarks', [InvoiceController::class, 'addRemarks'])->name('invoices.addRemarks');
 Route::delete('/invoices/{id}', [InvoiceController::class, 'destroy'])->name('invoices.destroy');
-
-//Route::get('/invoices/{id}', [InvoiceController::class, 'show'])->name('invoices.show');
-
-
-
-//Route::get('/invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
-
-//Route::get('generate-invoice-pdf', array('as'=> 'generate.invoice.pdf', 'uses' => 'PDFController@generateInvoicePDF'));
-
-//homepage ni redundent boleh delete
-//Route::get('/homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
 
 //Floors Me
 Route::get('/floor-overview', function () {
@@ -126,6 +121,10 @@ Route::prefix('product')->group(function () {
     Route::post('/insert', [ProductController::class, 'insertProduct'])->name('insert_product');
     Route::patch('/update/{id}', [ProductController::class, 'updateProduct'])->name('update_product');
     Route::delete('/delete/{id}', [ProductController::class, 'deleteProduct'])->name('delete_product');
+    Route::patch('/approve/{id}', [ProductController::class, 'approveProduct'])->name('approve_product');
+    Route::patch('/reject/{id}', [ProductController::class, 'rejectProduct'])->name('reject_product');
+
+
 });
 
 // Route::get('list_product', [ProductController::class, 'ProductList'])->name('product.index');

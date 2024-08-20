@@ -25,7 +25,7 @@
 </div>
 <div class="form-group">
     <label for="client_id{{ $row->id }}">Customer/Company of the product</label>
-    <select class="form-control" id="client_id{{ $row->id }}" name="client_id" required>
+    <select class="form-control" id="client_id{{ $row->id }}" name="client_id" disabled>
         <option value="">Select Customer/Company</option>
         @foreach($clients as $client)
             <option value="{{ $client->id }}" {{ $client->id == $row->client_id ? 'selected' : '' }}>{{ $client->name }}</option>

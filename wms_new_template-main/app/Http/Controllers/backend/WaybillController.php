@@ -74,17 +74,18 @@ class WaybillController extends Controller
     {
         // Validation rules
         $request->validate([
+            'no' => 'required|string',
             'customer_id' => 'required|string',
             'service_type' => 'required|string',
             'shipper_details.name' => 'required|string',
             'shipper_details.address' => 'required|string',
             'shipper_details.postcode' => 'required|string',
-            'shipper_details.attention' => 'required|string',
+            'shipper_details.attention' => 'nullable|string',
             'shipper_details.tel' => 'required|string',
             'receiver_details.name' => 'required|string',
             'receiver_details.address' => 'required|string',
             'receiver_details.postcode' => 'required|string',
-            'receiver_details.attention' => 'required|string',
+            'receiver_details.attention' => 'nullable|string',
             'receiver_details.tel' => 'required|string',
         ]);
 
@@ -107,7 +108,8 @@ class WaybillController extends Controller
         // Create a new Waybill instance
         $waybill = new Waybill();
         $waybill->date = $formattedDate;
-        $waybill->waybill_no = 'ARKDWB-' . $dateWb . '-' . $request->input('customer_id');
+        $waybill->no = $request->input('no');
+        $waybill->waybill_no = 'ARKDWB-' . $dateWb . '-' . $request->input('no') . $request->input('customer_id');
         $waybill->customer_id = $request->input('customer_id');
         $waybill->service_type = $request->input('service_type');
         $waybill->shipper_name = $request->input('shipper_details.name');

@@ -41,6 +41,10 @@
                             <form id="waybillForm" action="{{ route('waybills.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
+                                    <label for="no">No:</label>
+                                    <input type="text" class="form-control" name="no" id="no" required>
+                                </div>
+                                <div class="form-group">
                                     <label for="customer_id">Customer ID:</label>
                                     <input type="text" class="form-control" name="customer_id" id="customer_id" required>
                                 </div>
@@ -72,7 +76,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="shipper_attention">Attention:</label>
-                                    <input type="text" class="form-control" name="shipper_details[attention]" id="shipper_attention" required>
+                                    <input type="text" class="form-control" name="shipper_details[attention]" id="shipper_attention">
                                 </div>
                                 <div class="form-group">
                                     <label for="shipper_tel">Phone:</label>
@@ -96,7 +100,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="receiver_attention">Attention:</label>
-                                    <input type="text" class="form-control" name="receiver_details[attention]" id="receiver_attention" required>
+                                    <input type="text" class="form-control" name="receiver_details[attention]" id="receiver_attention">
                                 </div>
                                 <div class="form-group">
                                     <label for="receiver_tel">Phone:</label>

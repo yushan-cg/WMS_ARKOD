@@ -56,6 +56,7 @@
                                     <th>Client</th>
                                     <th>Email</th>
                                     <th>Address</th>
+                                    <th>Postcode</th>
                                     <th>Attention</th>
                                     <th>Tel</th>
                                     <th>Actions</th>
@@ -67,6 +68,7 @@
                                         <td>{{ $client['name'] }}</td>
                                         <td>{{ $client['email'] }}</td>
                                         <td>{{ $client['address'] }}</td>
+                                        <td>{{ $client['postcode'] }}</td>
                                         <td>{{ $client['attention'] }}</td>
                                         <td>{{ $client['tel'] }}</td>
                                         <td>
@@ -121,6 +123,10 @@
                                                             <input type="text" name="address" class="form-control" id="address{{ $client['id'] }}" value="{{ $client['address'] }}">
                                                         </div>
                                                         <div class="form-group">
+                                                            <label for="postcode{{ $client['id'] }}">Client Postcode</label>
+                                                            <input type="text" name="postcode" class="form-control" id="postcode{{ $client['id'] }}" value="{{ $client['postcode'] }}">
+                                                        </div>
+                                                        <div class="form-group">
                                                             <label for="attention{{ $client['id'] }}">Attention</label>
                                                             <input type="text" name="attention" class="form-control" id="attention{{ $client['id'] }}" value="{{ $client['attention'] }}">
                                                         </div>
@@ -170,8 +176,12 @@
                             <input type="text" name="address" class="form-control" id="addressClient" placeholder="Enter client address" required>
                         </div>
                         <div class="form-group">
+                            <label for="postcodeClient">Client Postcode</label>
+                            <input type="text" name="postcode" class="form-control" id="postcodeClient" placeholder="Enter client postcode" required>
+                        </div>
+                        <div class="form-group">
                             <label for="attentionClient">Attention</label>
-                            <input type="text" name="attention" class="form-control" id="attentionClient" placeholder="Enter attention" required>
+                            <input type="text" name="attention" class="form-control" id="attentionClient" placeholder="Enter attention">
                         </div>
                         <div class="form-group">
                             <label for="telClient">Telephone</label>
@@ -212,8 +222,12 @@
                             <input type="text" name="address" class="form-control" id="addressCustomer" placeholder="Enter customer address" required>
                         </div>
                         <div class="form-group">
+                            <label for="postcodeCustomer">Customer Postcode</label>
+                            <input type="text" name="postcode" class="form-control" id="postcodeCustomer" placeholder="Enter customer postcode" required>
+                        </div>
+                        <div class="form-group">
                             <label for="attentionCustomer">Attention</label>
-                            <input type="text" name="attention" class="form-control" id="attentionCustomer" placeholder="Enter attention" required>
+                            <input type="text" name="attention" class="form-control" id="attentionCustomer" placeholder="Enter attention">
                         </div>
                         <div class="form-group">
                             <label for="telCustomer">Telephone</label>

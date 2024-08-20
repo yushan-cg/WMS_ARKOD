@@ -60,7 +60,8 @@ class ClientController extends Controller
         'name' => 'required|string|max:255',
         'email' => 'required|email',
         'address' => 'required|string',
-        'attention' => 'required|string',
+        'postcode' => 'required|string',
+        'attention' => 'nullable|string',
         'tel' => 'required|string'
     ]);
 
@@ -73,6 +74,7 @@ class ClientController extends Controller
         'name' => $validatedData['name'],
         'email' => $validatedData['email'],
         'address' => $validatedData['address'],
+        'postcode' => $validatedData['postcode'],
         'attention' => $validatedData['attention'],
         'tel' => $validatedData['tel'],
     ]);
@@ -95,7 +97,8 @@ class ClientController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'address' => 'required|string',
-            'attention' => 'required|string',
+            'postcode' => 'required|string',
+            'attention' => 'nullable|string',
             'tel' => 'required|string'
         ]);
 

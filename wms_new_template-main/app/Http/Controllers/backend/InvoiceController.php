@@ -51,14 +51,15 @@ class InvoiceController extends Controller
     try {
         $request->validate([
             'customer_id' => 'required|string',
+            'no' => 'required|string',
             'sst_percentage' => 'required|numeric',
             'payment_method' => 'required|string',
             'name' => 'required|string',
             'address' => 'required|string',
-            'attention' => 'required|string',
+            'attention' => 'nullable|string',
             'tel' => 'required|string',
             'payment_terms' => 'nullable|string',
-            'due_date' => 'nullable|date',
+            'due_date' => 'nullable|string',
             'items' => 'nullable|array',
             'items.*.quantity' => 'nullable|integer',
             'items.*.description' => 'nullable|string',
@@ -72,16 +73,20 @@ class InvoiceController extends Controller
 
         // Create and save the invoice
         $invoice = new Invoice();
+        $invoice->no = $request->input('no');
         $invoice->customer_id = $request->input('customer_id');
         $invoice->date = $formattedDate;
-        $invoice->invoice_no = 'ARKODSI-' . $dateInv . '-' . $request->customer_id;
+        $invoice->invoice_no = 'ARKODSI-' . $dateInv . '-' . $request->input('no') . $request->customer_id;
         $invoice->payment_method = $request->input('payment_method');
         $invoice->name = $request->input('name');
         $invoice->address = $request->input('address');
         $invoice->attention = $request->input('attention');
         $invoice->tel = $request->input('tel');
         $invoice->payment_terms = $request->input('payment_terms');
-        $invoice->due_date = $request->input('due_date');
+
+
+        // Set due_date to null if not provided
+        $invoice->due_date = $request->input('payment_terms') ? $request->input('due_date') : null;
         $invoice->save();
 
         $subtotalPrice = 0;
@@ -146,7 +151,8 @@ class InvoiceController extends Controller
             'attention' => $invoice->attention,
             'tel' => $invoice->tel,
             'payment_terms' => $invoice->payment_terms,
-            'due_date' => Carbon::parse($invoice->due_date)->format('d-m-y'),
+            // 'due_date' => Carbon::parse($invoice->due_date)->format('d-m-y'),
+            'due_date' => $invoice->due_date ? Carbon::parse($invoice->due_date)->format('d-m-y') : '',
             'items' => $finalItems,
             'subtotal' => $subtotalPrice,
             'sstPercentage' => $sstPercentage,

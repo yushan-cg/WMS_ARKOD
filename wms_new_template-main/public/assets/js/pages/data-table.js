@@ -42,16 +42,6 @@ $(function () {
 	  'autoWidth'   : false,
 	});
 
-    $('#productapproval').DataTable({
-	  'paging'      : true,
-	  'lengthChange': true,
-	  'searching'   : true,
-	  'ordering'    : true,
-	  'info'        : true,
-	  'autoWidth'   : false,
-	});
-
-
 	$('#complex_header').DataTable();
 
 	//--------Individual column searching
